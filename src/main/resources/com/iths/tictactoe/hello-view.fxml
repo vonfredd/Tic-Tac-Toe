@@ -11,7 +11,7 @@
 
     <top>
         <VBox alignment="CENTER" style="-fx-background-color: blue; ">
-            <Button fx:id="buttonTop" text="Hello! " />
+            <Label text="TicTacToe" style ="-fx-font-size: 50px; " />
         </VBox>
     </top>
 
@@ -23,15 +23,15 @@
 
     <center>
             <TilePane maxWidth="360" maxHeight="300" style="-fx-background-color: Black; -fx-alignment: center; -fx-hgap: 5px; -fx-vgap: 5px;">
-                <Button fx:id="b1" minHeight="100" minWidth="113" onMouseClicked="#changeText" style="-fx-font-size: 40;">1 </Button>
-                <Button fx:id="b2" minHeight="100" minWidth="113" onMouseClicked="#changeText" style="-fx-font-size: 40;">2 </Button>
-                <Button fx:id="b3" minHeight="100" minWidth="113" onMouseClicked="#changeText" style="-fx-font-size: 40;">3 </Button>
-                <Button fx:id="b4" minHeight="100" minWidth="113" onMouseClicked="#changeText" style="-fx-font-size: 40;">4 </Button>
-                <Button fx:id="b5" minHeight="100" minWidth="113" onMouseClicked="#changeText" style="-fx-font-size: 40;">5 </Button>
-                <Button fx:id="b6" minHeight="100" minWidth="113" onMouseClicked="#changeText" style="-fx-font-size: 40;">6 </Button>
-                <Button fx:id="b7" minHeight="100" minWidth="113" onMouseClicked="#changeText" style="-fx-font-size: 40;">7 </Button>
-                <Button fx:id="b8" minHeight="100" minWidth="113" onMouseClicked="#changeText" style="-fx-font-size: 40;">8 </Button>
-                <Button fx:id="b9" minHeight="100" minWidth="113" onMouseClicked="#changeText" style="-fx-font-size: 40;">9 </Button>
+                <Button fx:id="b1" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40;">1 </Button>
+                <Button fx:id="b2" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40;">2 </Button>
+                <Button fx:id="b3" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40;">3 </Button>
+                <Button fx:id="b4" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40;">4 </Button>
+                <Button fx:id="b5" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40;">5 </Button>
+                <Button fx:id="b6" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40;">6 </Button>
+                <Button fx:id="b7" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40;">7 </Button>
+                <Button fx:id="b8" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40;">8 </Button>
+                <Button fx:id="b9" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40;">9 </Button>
          <BorderPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>

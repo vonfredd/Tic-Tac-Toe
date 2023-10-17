@@ -2,7 +2,11 @@ package com.iths.tictactoe;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelloController {
 
@@ -27,6 +31,8 @@ public class HelloController {
    @FXML
    private Button b9;
 
+    @FXML
+    private Label gameOverLabel;
 
     @FXML
     private Button buttonRight;
@@ -39,24 +45,27 @@ public class HelloController {
 
     public void initialize() {
         // welcomeText.textProperty().bind(model.messageProperty()); // bind field to Model.
+        model.addButtons(b1);
+        model.addButtons(b2);
+        model.addButtons(b3);
+        model.addButtons(b4);
+        model.addButtons(b5);
+        model.addButtons(b6);
+        model.addButtons(b7);
+        model.addButtons(b8);
+        model.addButtons(b9);
+        model.setPlayerTurn(1);
+        model.setCount(9);
+
     }
 
     public void onLabelClicked() {
  //       model.setMessage("");
     }
 
-    public void changeText(MouseEvent event){
-        //Button clickedButton = (Button) event.getSource();
-        Button clickedButton = (Button) event.getSource();
-
-        if (playerTurn == 1) {
-            clickedButton.setText(model.getPlayerOne());
-            playerTurn = 2;
-        } else {
-            clickedButton.setText(model.getPlayerTwo());
-            playerTurn = 1;
-        }
-
+    public void setXandO(MouseEvent event){
+        model.XandO(event);
     }
+
 
 }
