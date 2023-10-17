@@ -1,16 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.iths.tictactoe.HelloController">
+<?import javafx.scene.shape.Circle?>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.iths.tictactoe.HelloController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets left="20" right="20" top="20" bottom="20"/>
     </padding>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+    <top>
+        <VBox minHeight="100" style="-fx-background-color: blue; ">
+            <Button fx:id="buttonTop" onAction="#onHelloButtonClick" text="Hello! "/>
+        </VBox>
+    </top>
+
+    <bottom>
+        <VBox minHeight="100" style="-fx-background-color: green;">
+            <Button fx:id="buttonBottom" onAction="#onHelloButtonClick" text="Hello!"/>
+        </VBox>
+    </bottom>
+
+    <center>
+        <VBox alignment="CENTER" onMouseMoved="#mouseMoved" style="-fx-background-color: red;">
+            <Label fx:id="welcomeText" onMouseClicked="#onLabelClicked"/>
+            <Label fx:id="anotherLabel" text="${controller.model.message}"/>
+
+            <CheckBox fx:id="checkbox"/>
+            <TextField maxWidth="200" disable="${!checkbox.selected}"/>
+            <Circle fill="${colorPicker.color}" radius="100" stroke="black" strokeType="INSIDE"/>
+        </VBox>
+
+    </center>
+
+    <left>
+        <VBox minWidth="100" style="-fx-background-color: pink;">
+            <Button fx:id="buttonLeft" onAction="#onHelloButtonClick" text="Hello!"/>
+        </VBox>
+    </left>
+
+    <right>
+        <VBox minWidth="100" style="-fx-background-color: yellow;">
+            <Button fx:id="buttonRight" onAction="#onHelloButtonClick" text="Hello!"/>
+        </VBox>
+    </right>
+</BorderPane>
