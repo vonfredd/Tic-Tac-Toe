@@ -4,50 +4,53 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.iths.tictactoe.HelloController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iths.tictactoe.HelloController">
     <padding>
-        <Insets left="20" right="20" top="20" bottom="20"/>
+        <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
     <top>
-        <VBox alignment="CENTER" minHeight="100" style="-fx-background-color: blue; ">
-            <Button fx:id="buttonTop" onAction="#onHelloButtonClick" text="Hello! "/>
+        <VBox alignment="CENTER" style="-fx-background-color: blue; ">
+            <Button fx:id="buttonTop" onAction="#onHelloButtonClick" text="Hello! " />
         </VBox>
     </top>
 
     <bottom>
-        <VBox alignment="CENTER" minHeight="100" style="-fx-background-color: green;">
-            <Button fx:id="buttonBottom" onAction="#onHelloButtonClick" text="Hello!"/>
+        <VBox alignment="CENTER" style="-fx-background-color: green;">
+            <Button fx:id="buttonBottom" onAction="#onHelloButtonClick" text="Hello!" />
         </VBox>
     </bottom>
 
     <center>
-            <TilePane maxWidth="360" minWidth="360" style="-fx-background-color: Black; -fx-pref-rows: 1; -fx-pref-columns: 3; -fx-alignment: center; -fx-hgap: 5px; -fx-vgap: 5px;" >
-                <Button fx:id="b1" minWidth="113" minHeight="113" >1 </Button>
-                <Button fx:id="b2" minWidth="113" minHeight="113" >2 </Button>
-                <Button fx:id="b3" minWidth="113" minHeight="113" >3 </Button>
-                <Button fx:id="b4" minWidth="113" minHeight="113" >4 </Button>
-                <Button fx:id="b5" minWidth="113" minHeight="113" >5 </Button>
-                <Button fx:id="b6" minWidth="113" minHeight="113" >6 </Button>
-                <Button fx:id="b7" minWidth="113" minHeight="113" >7 </Button>
-                <Button fx:id="b8" minWidth="113" minHeight="113" >8 </Button>
-                <Button fx:id="b9" minWidth="113" minHeight="113" >9 </Button>
+            <TilePane maxWidth="360" maxHeight="300" style="-fx-background-color: Black; -fx-alignment: center; -fx-hgap: 5px; -fx-vgap: 5px;">
+                <Button fx:id="b1" minHeight="100" minWidth="113">1 </Button>
+                <Button fx:id="b2" minHeight="100" minWidth="113">2 </Button>
+                <Button fx:id="b3" minHeight="100" minWidth="113">3 </Button>
+                <Button fx:id="b4" minHeight="100" minWidth="113">4 </Button>
+                <Button fx:id="b5" minHeight="100" minWidth="113">5 </Button>
+                <Button fx:id="b6" minHeight="100" minWidth="113">6 </Button>
+                <Button fx:id="b7" minHeight="100" minWidth="113">7 </Button>
+                <Button fx:id="b8" minHeight="100" minWidth="113">8 </Button>
+                <Button fx:id="b9" minHeight="100" minWidth="113">9 </Button>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
             </TilePane>
 
     </center>
 
     <left>
-        <VBox alignment="CENTER" minWidth="100" style="-fx-background-color: pink;">
-            <Button fx:id="buttonLeft" onAction="#onHelloButtonClick" text="Hello!"/>
+        <VBox alignment="CENTER"  style="-fx-background-color: pink;">
+            <Button fx:id="buttonLeft" onAction="#onHelloButtonClick" text="Hello!" />
         </VBox>
     </left>
 
     <right>
-        <VBox alignment="CENTER" minWidth="100" style="-fx-background-color: yellow;">
-            <Button fx:id="buttonRight" onAction="#onHelloButtonClick" text="Hello!"/>
+        <VBox alignment="CENTER" style="-fx-background-color: yellow;">
+            <Button fx:id="buttonRight" onAction="#onHelloButtonClick" text="Hello!" />
         </VBox>
     </right>
 </BorderPane>
