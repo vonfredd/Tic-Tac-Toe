@@ -10,8 +10,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class HelloController {
-    @FXML
-    private Label welcomeText;
+ //  @FXML
+ //  private Label welcomeText;
     @FXML
     private Button buttonRight;
     @FXML
@@ -22,16 +22,16 @@ public class HelloController {
     }
 
     public void initialize() {
-        welcomeText.textProperty().bind(model.messageProperty()); // bind field to Model.
+     //   welcomeText.textProperty().bind(model.messageProperty()); // bind field to Model.
     }
 
     @FXML
     protected void onHelloButtonClick() {
-        model.setMessage("Welcome to JavaFX Application!");
+  //      model.setMessage("Welcome to JavaFX Application!");
     }
 
     public void onLabelClicked() {
-        model.setMessage("");
+ //       model.setMessage("");
     }
 
     public void mouseMoved(MouseEvent mouseEvent) {
