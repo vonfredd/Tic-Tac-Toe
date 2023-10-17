@@ -1,17 +1,33 @@
 package com.iths.tictactoe;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 
 public class HelloController {
- //  @FXML
- //  private Label welcomeText;
+
+    private int playerTurn = 1;
+
+   @FXML
+   private Button b1;
+   @FXML
+   private Button b2;
+   @FXML
+   private Button b3;
+   @FXML
+   private Button b4;
+   @FXML
+   private Button b5;
+   @FXML
+   private Button b6;
+   @FXML
+   private Button b7;
+   @FXML
+   private Button b8;
+   @FXML
+   private Button b9;
+
+
     @FXML
     private Button buttonRight;
     @FXML
@@ -22,19 +38,25 @@ public class HelloController {
     }
 
     public void initialize() {
-     //   welcomeText.textProperty().bind(model.messageProperty()); // bind field to Model.
-    }
-
-    @FXML
-    protected void onHelloButtonClick() {
-  //      model.setMessage("Welcome to JavaFX Application!");
+        // welcomeText.textProperty().bind(model.messageProperty()); // bind field to Model.
     }
 
     public void onLabelClicked() {
  //       model.setMessage("");
     }
 
-    public void mouseMoved(MouseEvent mouseEvent) {
-        buttonRight.setText("X" + mouseEvent.getX() + "    Y" + mouseEvent.getY());
+    public void changeText(MouseEvent event){
+        //Button clickedButton = (Button) event.getSource();
+        Button clickedButton = (Button) event.getSource();
+
+        if (playerTurn == 1) {
+            clickedButton.setText(model.getPlayerOne());
+            playerTurn = 2;
+        } else {
+            clickedButton.setText(model.getPlayerTwo());
+            playerTurn = 1;
+        }
+
     }
+
 }
