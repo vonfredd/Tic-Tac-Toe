@@ -6,8 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Model {
     private int playerTurn;
@@ -21,6 +26,8 @@ public class Model {
     private ObservableList<Button> buttons = FXCollections.observableList(new ArrayList<>());
 
     private BooleanProperty resetGame = new SimpleBooleanProperty();
+    private IntegerProperty playerScore = new SimpleIntegerProperty();
+    private IntegerProperty computerScore = new SimpleIntegerProperty();
 
     private int count;
 
@@ -78,8 +85,10 @@ public class Model {
         clickedButton.setDisable(true);
         --count;
         checkWinner();
-        computerPick();
-        checkWinner();
+        if(!isGameIsOver()) {
+            computerPick();
+            checkWinner();
+        }
 
         //Player 2
         //            clickedButton.setText(getPlayerTwo());
@@ -115,9 +124,10 @@ public class Model {
             horizontal.append(buttons.get(i).getText());
             horizontal.append(buttons.get(i + 1).getText());
             horizontal.append(buttons.get(i + 2).getText());
-
-            if (!whoIsTheWinner(horizontal).equals("")) setGameIsOver(true);
-
+            if (!whoIsTheWinner(horizontal).equals("")) {
+                setGameIsOver(true);
+                return;
+            }
         }
 
         StringBuilder verticalStr;
@@ -126,28 +136,38 @@ public class Model {
             verticalStr.append(buttons.get(i).getText());
             verticalStr.append(buttons.get(i + 3).getText());
             verticalStr.append(buttons.get(i + 6).getText());
-            if (!whoIsTheWinner(verticalStr).equals("")) setGameIsOver(true);
+            if (!whoIsTheWinner(verticalStr).equals("")) {
+                setGameIsOver(true);
+                return;
+            }
         }
 
         StringBuilder diagonal = new StringBuilder();
         for (int i = 0; i < 9; i += 4) {
             diagonal.append(buttons.get(i).getText());
         }
-        if (!whoIsTheWinner(diagonal).equals("")) setGameIsOver(true);
+        if (!whoIsTheWinner(diagonal).equals("")) {
+            setGameIsOver(true);
+            return;
+        }
 
         diagonal = new StringBuilder();
         for (int i = 2; i < 7; i += 2) {
             diagonal.append(buttons.get(i).getText());
         }
-        if (!whoIsTheWinner(diagonal).equals("")) setGameIsOver(true);
+        if (!whoIsTheWinner(diagonal).equals("")) {
+            setGameIsOver(true);
+        }
     }
 
     private String whoIsTheWinner(StringBuilder str) {
         if (str.toString().equals("XXX")) {
             setWinnerName("PLAYER WINS");
+            setPlayerScore(getPlayerScore()+1);
             return "end";
         } else if (str.toString().equals("OOO")) {
             setWinnerName("COMPUTER WINS");
+            setComputerScore(getComputerScore()+1);
             return "end";
         }
         return "";
@@ -155,6 +175,30 @@ public class Model {
 
     public String getWinnerName() {
         return winnerName.get();
+    }
+
+    public int getPlayerScore() {
+        return playerScore.get();
+    }
+
+    public IntegerProperty playerScoreProperty() {
+        return playerScore;
+    }
+
+    public void setPlayerScore(int playerScore) {
+        this.playerScore.set(playerScore);
+    }
+
+    public int getComputerScore() {
+        return computerScore.get();
+    }
+
+    public IntegerProperty computerScoreProperty() {
+        return computerScore;
+    }
+
+    public void setComputerScore(int computerScore) {
+        this.computerScore.set(computerScore);
     }
 
     public StringProperty winnerNameProperty() {
@@ -177,14 +221,36 @@ public class Model {
         this.gameIsOver.set(gameIsOver);
     }
 
-    public void resetGame(){
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setDisable(false);
-            buttons.get(i).setText("");
-        }
+    public void resetGame() {
+        resetButton(buttons);
         setGameIsOver(false);
         setWinnerName("");
         count = 9;
     }
+
+    private static void resetButton(List<Button> b) {
+        b.stream().forEach((e) -> {
+            e.setDisable(false);
+            e.setText("");
+        });
+    }
+
+    public void saveToFile(Path path) {
+
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(20000);
+                Files.writeString(path, "HEHEHEHE");
+                System.out.println("File saved");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        thread.start();
+    }
+
 
 }

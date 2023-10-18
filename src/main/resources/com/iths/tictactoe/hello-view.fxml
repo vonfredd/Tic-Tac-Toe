@@ -10,47 +10,81 @@
     </padding>
 
     <top>
-        <VBox alignment="CENTER" style="-fx-background-color: blue; ">
-            <Label style="-fx-font-size: 50px; " text="TicTacToe" />
-            <Label visible="false" fx:id="winnerName" style="-fx-font-size: 50px; -fx-text-fill: red;" />
-        </VBox>
+        <BorderPane style="-fx-background-color: blue; ">
+
+            <left>
+                <VBox alignment="CENTER">
+                    <padding>
+                        <Insets left="50" />
+                    </padding>
+                    <Label fx:id="playerScore" style="-fx-font-size: 80px; -fx-text-fill: red;" text="0">
+                  <VBox.margin>
+                     <Insets bottom="-30.0" />
+                  </VBox.margin></Label>
+                    <Label fx:id="player" style="-fx-font-size: 20px; -fx-text-fill: red;" text="Player">
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin></Label>
+                </VBox>
+            </left>
+
+            <center>
+                <VBox alignment="CENTER">
+                    <Label style="-fx-font-size: 50px; " text="TicTacToe" />
+                    <Label fx:id="winnerName" style="-fx-font-size: 50px; -fx-text-fill: red;" visible="false" />
+                </VBox>
+            </center>
+
+            <right>
+                <VBox alignment="CENTER">
+                    <padding>
+                        <Insets right="50" />
+                    </padding>
+                    <Label fx:id="computerScore" style="-fx-font-size: 80px; -fx-text-fill: red;" text="0">
+                  <VBox.margin>
+                     <Insets bottom="-30.0" />
+                  </VBox.margin></Label>
+                    <Label fx:id="computer" style="-fx-font-size: 20px; -fx-text-fill: red;" text="Computer" />
+                </VBox>
+            </right>
+        </BorderPane>
     </top>
 
     <bottom>
         <VBox alignment="TOP_CENTER" style="-fx-background-color: green;">
-            <Button fx:id="buttonBottom" text="Hello!" />
+            <Button fx:id="buttonBottom" onAction="#onSaveButtonAction" text="Save!" />
         </VBox>
     </bottom>
 
     <center>
-            <TilePane fx:id="pane" maxHeight="300" maxWidth="360" style="-fx-background-color: Black; -fx-alignment: center; -fx-hgap: 5px; -fx-vgap: 5px;">
-                <Button fx:id="b1" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" > </Button>
-                <Button fx:id="b2" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;"> </Button>
-                <Button fx:id="b3" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;"> </Button>
-                <Button fx:id="b4" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;"> </Button>
-                <Button fx:id="b5" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;"> </Button>
-                <Button fx:id="b6" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;"> </Button>
-                <Button fx:id="b7" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;"> </Button>
-                <Button fx:id="b8" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;"> </Button>
-                <Button fx:id="b9" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;"> </Button>
-         <BorderPane.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </BorderPane.margin>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-            </TilePane>
+        <TilePane fx:id="pane" maxHeight="300" maxWidth="360" style="-fx-background-color: Black; -fx-alignment: center; -fx-hgap: 5px; -fx-vgap: 5px;">
+            <Button fx:id="b1" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" />
+            <Button fx:id="b2" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" />
+            <Button fx:id="b3" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" />
+            <Button fx:id="b4" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" />
+            <Button fx:id="b5" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" />
+            <Button fx:id="b6" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" />
+            <Button fx:id="b7" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" />
+            <Button fx:id="b8" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" />
+            <Button fx:id="b9" minHeight="100" minWidth="113" onMouseClicked="#setXandO" style="-fx-font-size: 40; -fx-background-color: lightgrey;" />
+            <BorderPane.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </BorderPane.margin>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </TilePane>
 
     </center>
 
     <left>
-        <VBox minWidth="150" alignment="CENTER" style="-fx-background-color: pink;">
-            <Button minHeight="100" minWidth="100" onMouseClicked="#resetGame" fx:id="buttonLeft" text="RESET GAME!" />
+        <VBox alignment="CENTER" minWidth="150" style="-fx-background-color: pink;">
+            <Button fx:id="buttonLeft" minHeight="100" minWidth="100" onMouseClicked="#resetGame" text="RESET GAME!" />
         </VBox>
     </left>
 
     <right>
-        <VBox minWidth="150" alignment="CENTER" style="-fx-background-color: yellow;">
+        <VBox alignment="CENTER" minWidth="150" style="-fx-background-color: yellow;">
             <Button fx:id="buttonRight" text="Hello!" />
         </VBox>
     </right>
