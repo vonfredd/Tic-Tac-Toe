@@ -4,13 +4,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iths.tictactoe.HelloController">
+<BorderPane style="-fx-background-color: white; " xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iths.tictactoe.HelloController">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
     <top>
-        <BorderPane style="-fx-background-color: blue; ">
+        <BorderPane style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2px;">
 
             <left>
                 <VBox alignment="CENTER">
@@ -47,13 +47,14 @@
                     <Label fx:id="computer" style="-fx-font-size: 20px; -fx-text-fill: red;" text="Computer" />
                 </VBox>
             </right>
+         <BorderPane.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </BorderPane.margin>
         </BorderPane>
     </top>
 
     <bottom>
-        <VBox alignment="TOP_CENTER" style="-fx-background-color: green;">
-            <Button fx:id="buttonBottom" onAction="#onSaveButtonAction" text="Save!" />
-        </VBox>
+
     </bottom>
 
     <center>
@@ -78,14 +79,21 @@
     </center>
 
     <left>
-        <VBox alignment="CENTER" minWidth="150" style="-fx-background-color: pink;">
-            <Button fx:id="buttonLeft" minHeight="100" minWidth="100" onMouseClicked="#resetGame" text="RESET GAME!" />
+        <VBox alignment="CENTER" minWidth="150" spacing="50" style="-fx-background-color: pink;">
+            <Button fx:id="resetRoundButton" focusTraversable="false" minHeight="100" minWidth="100" onMouseClicked="#resetRound" text="RESET ROUND!" />
+            <Button fx:id="buttonLeft" focusTraversable="false" minHeight="100" minWidth="100" onMouseClicked="#resetGame" text="RESET GAME!" />
+         <BorderPane.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </BorderPane.margin>
         </VBox>
     </left>
 
     <right>
-        <VBox alignment="CENTER" minWidth="150" style="-fx-background-color: yellow;">
+        <VBox alignment="CENTER" minWidth="150" style="-fx-background-color: pink;">
             <Button fx:id="buttonRight" text="Hello!" />
+         <BorderPane.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </BorderPane.margin>
         </VBox>
     </right>
 </BorderPane>

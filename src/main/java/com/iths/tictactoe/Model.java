@@ -222,10 +222,9 @@ public class Model {
     }
 
     public void resetGame() {
-        resetButton(buttons);
-        setGameIsOver(false);
-        setWinnerName("");
-        count = 9;
+        resetRound();
+        setPlayerScore(0);
+        setComputerScore(0);
     }
 
     private static void resetButton(List<Button> b) {
@@ -253,4 +252,10 @@ public class Model {
     }
 
 
+    public void resetRound() {
+        resetButton(buttons);
+        setGameIsOver(false);
+        setWinnerName("");
+        count = 9;
+    }
 }

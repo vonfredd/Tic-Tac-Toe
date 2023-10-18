@@ -104,4 +104,8 @@ public class HelloController {
           //  model.saveToFile(selectedFile);
         }
     }
+
+    public void resetRound(MouseEvent event) {
+        model.resetRound();
+    }
 }
