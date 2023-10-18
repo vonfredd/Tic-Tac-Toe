@@ -17,9 +17,10 @@ public class Model {
     private final ReadOnlyStringProperty playerOne = new ReadOnlyStringWrapper("X");
     private final ReadOnlyStringProperty playerTwo = new ReadOnlyStringWrapper("O");
     private BooleanProperty gameIsOver = new SimpleBooleanProperty();
-    //private List<Button> buttons = new ArrayList<>();
 
     private ObservableList<Button> buttons = FXCollections.observableList(new ArrayList<>());
+
+    private BooleanProperty resetGame = new SimpleBooleanProperty();
 
     private int count;
 
@@ -115,7 +116,7 @@ public class Model {
             horizontal.append(buttons.get(i + 1).getText());
             horizontal.append(buttons.get(i + 2).getText());
 
-            if (!whoWon(horizontal).equals("")) setGameIsOver(true);
+            if (!whoIsTheWinner(horizontal).equals("")) setGameIsOver(true);
 
         }
 
@@ -125,23 +126,23 @@ public class Model {
             verticalStr.append(buttons.get(i).getText());
             verticalStr.append(buttons.get(i + 3).getText());
             verticalStr.append(buttons.get(i + 6).getText());
-            if (!whoWon(verticalStr).equals("")) setGameIsOver(true);
+            if (!whoIsTheWinner(verticalStr).equals("")) setGameIsOver(true);
         }
 
         StringBuilder diagonal = new StringBuilder();
         for (int i = 0; i < 9; i += 4) {
             diagonal.append(buttons.get(i).getText());
         }
-        if (!whoWon(diagonal).equals("")) setGameIsOver(true);
+        if (!whoIsTheWinner(diagonal).equals("")) setGameIsOver(true);
 
         diagonal = new StringBuilder();
         for (int i = 2; i < 7; i += 2) {
             diagonal.append(buttons.get(i).getText());
         }
-        if (!whoWon(diagonal).equals("")) setGameIsOver(true);
+        if (!whoIsTheWinner(diagonal).equals("")) setGameIsOver(true);
     }
 
-    private String whoWon(StringBuilder str) {
+    private String whoIsTheWinner(StringBuilder str) {
         if (str.toString().equals("XXX")) {
             setWinnerName("PLAYER WINS");
             return "end";
@@ -182,6 +183,7 @@ public class Model {
             buttons.get(i).setText("");
         }
         setGameIsOver(false);
+        setWinnerName("");
         count = 9;
     }
 

@@ -13,6 +13,7 @@ public class HelloController {
 
     @FXML
     private Button buttonLeft;
+
     private int playerTurn = 1;
 
     @FXML
@@ -50,6 +51,9 @@ public class HelloController {
 
     public void initialize() {
         // welcomeText.textProperty().bind(model.messageProperty()); // bind field to Model.
+        pane.disableProperty().bind(model.gameIsOverProperty());
+        winnerName.visibleProperty().bind(model.gameIsOverProperty());
+        winnerName.textProperty().bind(model.winnerNameProperty());
         model.addButtons(b1);
         model.addButtons(b2);
         model.addButtons(b3);
@@ -70,20 +74,10 @@ public class HelloController {
 
     public void setXandO(MouseEvent event) {
         model.XandO(event);
-        setWinnerName();
-    }
 
-    public void setWinnerName() {
-        if (model.isGameIsOver()) {
-            pane.setDisable(true);
-            winnerName.setVisible(true);
-            winnerName.setText(model.getWinnerName());
-        }
     }
 
     public void resetGame(MouseEvent event) {
         model.resetGame();
-        pane.setDisable(false);
-        winnerName.setVisible(false);
     }
 }
