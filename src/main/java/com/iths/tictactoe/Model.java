@@ -5,20 +5,18 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Model {
     private int playerTurn;
-    private StringBuilder playerPoints = new StringBuilder();
-    private StringBuilder computerPoints = new StringBuilder();
+
+    private StringProperty winnerName = new SimpleStringProperty();
     private StringProperty message = new SimpleStringProperty();
-    private ReadOnlyStringProperty playerOne = new ReadOnlyStringWrapper("X");
-    private ReadOnlyStringProperty playerTwo = new ReadOnlyStringWrapper("O");
+    private final ReadOnlyStringProperty playerOne = new ReadOnlyStringWrapper("X");
+    private final ReadOnlyStringProperty playerTwo = new ReadOnlyStringWrapper("O");
+    private BooleanProperty gameIsOver = new SimpleBooleanProperty();
     private List<Button> buttons = new ArrayList<>();
 
-    Map<List<Button>, String> winnerMap = new HashMap<>();
     private int count;
 
     public void setCount(int count) {
@@ -27,10 +25,6 @@ public class Model {
 
     public void addButtons(Button button) {
         buttons.add(button);
-    }
-
-    public List<Button> getButtonsList() {
-        return buttons;
     }
 
     public String getMessage() {
@@ -73,27 +67,26 @@ public class Model {
         Button clickedButton = (Button) event.getSource();
         clickedButton.setText(getPlayerOne());
         clickedButton.setDisable(true);
-
         --count;
-        //buttons.remove(clickedButton);
-        System.out.println(count);
-        if (count > 0)
-            computerPick();
-        else
-            hideAllButtons();
+        checkWinner();
+        computerPick();
+        checkWinner();
 
         //Player 2
         //            clickedButton.setText(getPlayerTwo());
         //            clickedButton.setDisable(true);
         //            playerTurn = 1;
-
     }
 
     public void computerPick() {
+        if (count == 0 || isGameIsOver()) {
+            setWinnerName("NO WINNER!");
+            setGameIsOver(true);
+            return;
+        }
         int choise = (int) (Math.random() * buttons.size() - 1);
         calculateMove(choise);
 
-        // buttons.remove(buttons.get(choise));
     }
 
     public void hideAllButtons() {
@@ -102,13 +95,81 @@ public class Model {
         }
     }
 
-
     private void calculateMove(int choise) {
         while (buttons.get(choise).isDisabled()) {
-            choise = (int) (Math.random() * buttons.size() - 1);
+            choise = (int) (Math.random() * buttons.size());
         }
         buttons.get(choise).setText(getPlayerTwo());
         buttons.get(choise).setDisable(true);
         --count;
+    }
+
+    public void checkWinner() {
+
+        StringBuilder horizontal;
+        for (int i = 0; i <= 6; i += 3) {
+            horizontal = new StringBuilder();
+            horizontal.append(buttons.get(i).getText());
+            horizontal.append(buttons.get(i + 1).getText());
+            horizontal.append(buttons.get(i + 2).getText());
+
+            if (!whoWon(horizontal).equals("")) setGameIsOver(true);
+        }
+
+        StringBuilder verticalStr;
+        for (int i = 0; i < 3; i++) {
+            verticalStr = new StringBuilder();
+            verticalStr.append(buttons.get(i).getText());
+            verticalStr.append(buttons.get(i + 3).getText());
+            verticalStr.append(buttons.get(i + 6).getText());
+            if (!whoWon(verticalStr).equals("")) setGameIsOver(true);
+        }
+
+        StringBuilder diagonal = new StringBuilder();
+        for (int i = 0; i < 9; i += 4) {
+            diagonal.append(buttons.get(i).getText());
+        }
+        if (!whoWon(diagonal).equals("")) setGameIsOver(true);
+
+        diagonal = new StringBuilder();
+        for (int i = 2; i < 7; i += 2) {
+            diagonal.append(buttons.get(i).getText());
+        }
+        if (!whoWon(diagonal).equals("")) setGameIsOver(true);
+    }
+
+    private String whoWon(StringBuilder str) {
+        if (str.toString().equals("XXX")) {
+            setWinnerName("PLAYER WINS");
+            return "end";
+        } else if (str.toString().equals("OOO")) {
+            setWinnerName("COMPUTER WINS");
+            return "end";
+        }
+        return "";
+    }
+
+    public String getWinnerName() {
+        return winnerName.get();
+    }
+
+    public StringProperty winnerNameProperty() {
+        return winnerName;
+    }
+
+    public void setWinnerName(String winnerName) {
+        this.winnerName.set(winnerName);
+    }
+
+    public boolean isGameIsOver() {
+        return gameIsOver.get();
+    }
+
+    public BooleanProperty gameIsOverProperty() {
+        return gameIsOver;
+    }
+
+    public void setGameIsOver(boolean gameIsOver) {
+        this.gameIsOver.set(gameIsOver);
     }
 }
