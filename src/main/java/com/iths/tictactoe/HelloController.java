@@ -11,6 +11,8 @@ import java.util.List;
 
 public class HelloController {
 
+    @FXML
+    private Button buttonLeft;
     private int playerTurn = 1;
 
     @FXML
@@ -77,5 +79,11 @@ public class HelloController {
             winnerName.setVisible(true);
             winnerName.setText(model.getWinnerName());
         }
+    }
+
+    public void resetGame(MouseEvent event) {
+        model.resetGame();
+        pane.setDisable(false);
+        winnerName.setVisible(false);
     }
 }

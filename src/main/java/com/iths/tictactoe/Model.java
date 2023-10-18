@@ -1,6 +1,8 @@
 package com.iths.tictactoe;
 
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
@@ -15,7 +17,9 @@ public class Model {
     private final ReadOnlyStringProperty playerOne = new ReadOnlyStringWrapper("X");
     private final ReadOnlyStringProperty playerTwo = new ReadOnlyStringWrapper("O");
     private BooleanProperty gameIsOver = new SimpleBooleanProperty();
-    private List<Button> buttons = new ArrayList<>();
+    //private List<Button> buttons = new ArrayList<>();
+
+    private ObservableList<Button> buttons = FXCollections.observableList(new ArrayList<>());
 
     private int count;
 
@@ -25,6 +29,10 @@ public class Model {
 
     public void addButtons(Button button) {
         buttons.add(button);
+    }
+
+    public List<Button> getButtons() {
+        return buttons;
     }
 
     public String getMessage() {
@@ -89,12 +97,6 @@ public class Model {
 
     }
 
-    public void hideAllButtons() {
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setOpacity(0);
-        }
-    }
-
     private void calculateMove(int choise) {
         while (buttons.get(choise).isDisabled()) {
             choise = (int) (Math.random() * buttons.size());
@@ -114,6 +116,7 @@ public class Model {
             horizontal.append(buttons.get(i + 2).getText());
 
             if (!whoWon(horizontal).equals("")) setGameIsOver(true);
+
         }
 
         StringBuilder verticalStr;
@@ -172,4 +175,14 @@ public class Model {
     public void setGameIsOver(boolean gameIsOver) {
         this.gameIsOver.set(gameIsOver);
     }
+
+    public void resetGame(){
+        for (int i = 0; i < buttons.size(); i++) {
+            buttons.get(i).setDisable(false);
+            buttons.get(i).setText("");
+        }
+        setGameIsOver(false);
+        count = 9;
+    }
+
 }
