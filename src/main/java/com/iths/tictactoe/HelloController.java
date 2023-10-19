@@ -92,6 +92,10 @@ public class HelloController {
         model.resetGame();
     }
 
+    public void resetRound(MouseEvent event) {
+        model.resetRound();
+    }
+
     public void onSaveButtonAction(ActionEvent event) {
         Window window = ((Node) event.getSource()).getScene().getWindow();
 
@@ -104,9 +108,4 @@ public class HelloController {
           //  model.saveToFile(selectedFile);
         }
     }
-
-    public void resetRound(MouseEvent event) {
-        model.resetRound();
-    }
-
 }

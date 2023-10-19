@@ -16,8 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Model {
+    private int count;
     private int playerTurn;
-
     private StringProperty winnerName = new SimpleStringProperty();
     private StringProperty message = new SimpleStringProperty();
     private final ReadOnlyStringProperty playerOne = new ReadOnlyStringWrapper("X");
@@ -25,10 +25,9 @@ public class Model {
     private BooleanProperty gameIsOver = new SimpleBooleanProperty();
     private ObservableList<Button> buttons = FXCollections.observableList(new ArrayList<>());
 
-    private BooleanProperty resetGame = new SimpleBooleanProperty();
     private IntegerProperty playerScore = new SimpleIntegerProperty();
     private IntegerProperty computerScore = new SimpleIntegerProperty();
-    private int count;
+
 
     public void setCount(int count) {
         this.count = count;
@@ -130,6 +129,7 @@ public class Model {
         Button clickedButton = (Button) event.getSource();
         clickedButton.setText(getPlayerOne());
         clickedButton.setDisable(true);
+
         --count;
         checkWinner();
         if (!isGameIsOver()) {
@@ -144,14 +144,13 @@ public class Model {
     }
 
     public void computerPick() {
-        if (count == 0 || isGameIsOver()) {
+        if (count == 0 ) {
             setWinnerName("NO WINNER!");
             setGameIsOver(true);
             return;
         }
         int choise = (int) (Math.random() * buttons.size() - 1);
         calculateMove(choise);
-
     }
 
     private void calculateMove(int choise) {
@@ -262,7 +261,7 @@ public class Model {
         setComputerScore(0);
     }
 
-    private static void resetButton(List<Button> b) {
+    private static void resetButtons(List<Button> b) {
         b.stream().forEach((e) -> {
             e.setBorder(null);
             e.setDisable(false);
@@ -271,7 +270,7 @@ public class Model {
     }
 
     public void resetRound() {
-        resetButton(buttons);
+        resetButtons(buttons);
         setGameIsOver(false);
         setWinnerName("");
         count = 9;
