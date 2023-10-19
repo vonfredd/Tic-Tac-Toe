@@ -35,6 +35,7 @@ public class Model {
 
     public void addButtons(Button button) {
         buttons.add(button);
+        button.setOpacity(1);
     }
 
     public List<Button> getButtons() {
@@ -129,13 +130,23 @@ public class Model {
         Button clickedButton = (Button) event.getSource();
         clickedButton.setText(getPlayerOne());
         clickedButton.setDisable(true);
-
         --count;
-        checkWinner();
-        if (!isGameIsOver()) {
+        if(!winner(arr,buttons).equals("XXX") || winner(arr,buttons).equals("OOO")){
             computerPick();
-            checkWinner();
         }
+            var m = winner(arr,buttons);
+            switch (m){
+                case "XXX" -> {
+                    setWinnerName("Player Wins");
+                    setGameIsOver(true);
+                    setPlayerScore(getPlayerScore() + 1);
+                }
+                case "OOO" -> {
+                    setWinnerName("Computer Wins");
+                    setGameIsOver(true);
+                    setComputerScore(getComputerScore() + 1);
+                }
+            }
 
         //Player 2
         //            clickedButton.setText(getPlayerTwo());
@@ -144,7 +155,7 @@ public class Model {
     }
 
     public void computerPick() {
-        if (count == 0 ) {
+        if (count == 0) {
             setWinnerName("NO WINNER!");
             setGameIsOver(true);
             return;
@@ -162,97 +173,27 @@ public class Model {
         --count;
     }
 
-    public void checkWinner() {
+    public int[][] arr = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
-        /* win if
-         *Horisontellt
-         * 0,1,2
-         * 3,4,5
-         * 6,7,8
-         *
-         *Vertikalt
-         * 0,3,6
-         * 1,4,7
-         * 2,5,8
-         *
-         *Diagonalt
-         * 0,4,8
-         * 2,4,6
-         *
-         * */
-
-
-        StringBuilder horizontal;
-        for (int i = 0; i <= 6; i += 3) {
-            horizontal = new StringBuilder();
-            horizontal.append(buttons.get(i).getText());
-            horizontal.append(buttons.get(i + 1).getText());
-            horizontal.append(buttons.get(i + 2).getText());
-            if (weHaveAWinner(horizontal, i, 1))
-                return;
-        }
-
-        StringBuilder verticalStr;
-        for (int i = 0; i < 3; i++) {
-            verticalStr = new StringBuilder();
-            verticalStr.append(buttons.get(i).getText());
-            verticalStr.append(buttons.get(i + 3).getText());
-            verticalStr.append(buttons.get(i + 6).getText());
-            if (weHaveAWinner(verticalStr, i, 3))
-                return;
-        }
-
-        StringBuilder diagonal = new StringBuilder();
-        diagonal.append(buttons.get(0).getText());
-        diagonal.append(buttons.get(4).getText());
-        diagonal.append(buttons.get(8).getText());
-        if (weHaveADiagonalWinner(diagonal)) {
-            List<Button> list = Arrays.asList(buttons.get(0), buttons.get(4), buttons.get(8));
-            changeColor(list);
-            return;
-        }
-
-        diagonal = new StringBuilder();
-        diagonal.append(buttons.get(2).getText());
-        diagonal.append(buttons.get(4).getText());
-        diagonal.append(buttons.get(6).getText());
-        if (weHaveADiagonalWinner(diagonal)) {
-            List<Button> list = Arrays.asList(buttons.get(2), buttons.get(4), buttons.get(6));
-            changeColor(list);
-        }
-    }
-
-    private boolean weHaveADiagonalWinner(StringBuilder str) {
-        if (str.toString().equals("XXX") || str.toString().equals("OOO")) {
-            SetWinner(str);
-            setGameIsOver(true);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean weHaveAWinner(StringBuilder str, int i, int d) {
-        if (str.toString().equals("XXX") || str.toString().equals("OOO")) {
-            SetWinner(str);
-            List<Button> list = Arrays.asList(buttons.get(i), buttons.get(i + d), buttons.get(i + (d + d)));
-            changeColor(list);
-            setGameIsOver(true);
-            return true;
-        }
-        return false;
-    }
-
-    private void SetWinner(StringBuilder horizontal) {
-        switch (horizontal.toString()) {
-            case "XXX" -> {
-                setWinnerName("PLAYER WINS");
-                setPlayerScore(getPlayerScore() + 1);
+    private String winner(int[][] arr, ObservableList <Button> buttons) {
+        StringBuilder possibleWinner;
+        List<Button> tempList;
+        for (int i = 0; i < arr.length; i++) {
+            tempList = new ArrayList<>();
+            possibleWinner = new StringBuilder();
+            for (int j = 0; j < arr[i].length; j++) {
+                possibleWinner.append(buttons.get(arr[i][j]).getText());
+                tempList.add(buttons.get(arr[i][j]));
             }
-            case "OOO" -> {
-                setWinnerName("COMPUTER WINS");
-                setComputerScore(getComputerScore() + 1);
+            if (possibleWinner.toString().equals("XXX")) {
+                paintWinningButtons(tempList);
+                return "XXX";
+            } else if (possibleWinner.toString().equals("OOO")){
+                paintWinningButtons(tempList);
+                return "OOO";
             }
         }
+        return "";
     }
 
     public void resetGame() {
@@ -289,13 +230,15 @@ public class Model {
                 throw new RuntimeException(e);
             }
         });
-
         thread.start();
     }
 
-    public void changeColor(List<Button> buttonsThatWon) {
-        for (Button b : buttonsThatWon) {
-            b.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
-        }
+    private static void paintWinningButtons(List<Button> tempList) {
+        tempList.stream().forEach((e)-> e.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, null, new BorderWidths(5)))));
+        tempList.stream().forEach((e)->e.setOpacity(1));
+    }
+
+    public void setOpacity(ObservableList <Button> b){
+        b.stream().forEach((e)->e.setOpacity(1));
     }
 }
