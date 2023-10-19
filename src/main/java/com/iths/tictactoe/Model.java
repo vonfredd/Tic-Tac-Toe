@@ -19,6 +19,7 @@ public class Model {
     private int count;
     private int playerTurn;
     private StringProperty winnerName = new SimpleStringProperty();
+    private  int[][] arr = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
     private StringProperty message = new SimpleStringProperty();
     private final ReadOnlyStringProperty playerOne = new ReadOnlyStringWrapper("X");
     private final ReadOnlyStringProperty playerTwo = new ReadOnlyStringWrapper("O");
@@ -173,7 +174,6 @@ public class Model {
         --count;
     }
 
-    public int[][] arr = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
     private String winner(int[][] arr, ObservableList <Button> buttons) {
         StringBuilder possibleWinner;
