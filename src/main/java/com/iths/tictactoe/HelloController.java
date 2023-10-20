@@ -119,15 +119,12 @@ public class HelloController {
 
     public void resetGame() {
         resetRound();
-        model.setPlayerScore(0);
-        model.setComputerScore(0);
+        model.resetScore();
     }
 
     public void resetRound() {
         resetButtons(buttons);
-        model.setGameIsOver(false);
-        model.setWinnerName("");
-        model.setEmptySpotsLeft(9);
+        model.resetRound();
     }
 
     private static void resetButtons(List<Button> buttons) {
@@ -151,6 +148,7 @@ public class HelloController {
             if (possibleWinner.toString().equals("XXX") || possibleWinner.toString().equals("OOO")) {
                 paintWinningButtons(colorWinners);
                 model.theWinner(model.getPlayerTurn());
+                break;
             }
         }
     }

@@ -102,4 +102,14 @@ public class Model {
     }
 
 
+    public void resetRound() {
+        setGameIsOver(false);
+        setWinnerName("");
+        setEmptySpotsLeft(9);
+    }
+
+    public void resetScore() {
+        setPlayerScore(0);
+        setComputerScore(0);
+    }
 }
