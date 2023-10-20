@@ -101,11 +101,6 @@ public class Model {
             computerPick();
             winner(arr, buttons);
         }
-
-        //Player 2
-        //            clickedButton.setText(getPlayerTwo());
-        //            clickedButton.setDisable(true);
-        //            playerTurn = 1;
     }
 
     public void computerPick() {
@@ -122,8 +117,6 @@ public class Model {
         while (buttons.get(choise).isDisabled()) {
             choise = (int) (Math.random() * buttons.size());
         }
-       // if (playerOneTurn)
-         //   buttons.get(choise).setText(getPlayerOne());
         buttons.get(choise).setText(getPlayerTwo());
         buttons.get(choise).setDisable(true);
         --count;
@@ -204,8 +197,6 @@ public class Model {
         int choise = (int) (Math.random() * buttons.size() - 1);
         calculateMove(choise);
 
-        //If playerOneturn == true. calculatemove should have condition to set playermark.
-        // boolean playerOneTurn = true;
     }
 
 

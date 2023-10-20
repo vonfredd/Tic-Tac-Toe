@@ -44,44 +44,48 @@ public class HelloController {
     @FXML
     private Button b9;
 
-
     @FXML
     private Label winnerName;
 
     @FXML
     private Model model = new Model();
 
+    private List<Button> buttons;
+
     public Model getModel() {
         return model;
     }
 
     public void initialize() {
-        // welcomeText.textProperty().bind(model.messageProperty()); // bind field to Model.
         pane.disableProperty().bind(model.gameIsOverProperty());
         winnerName.visibleProperty().bind(model.gameIsOverProperty());
         winnerName.textProperty().bind(model.winnerNameProperty());
         playerScore.textProperty().bind(model.playerScoreProperty().asString());
         computerScore.textProperty().bind(model.computerScoreProperty().asString());
-        model.addButtons(b1);
-        model.addButtons(b2);
-        model.addButtons(b3);
-        model.addButtons(b4);
-        model.addButtons(b5);
-        model.addButtons(b6);
-        model.addButtons(b7);
-        model.addButtons(b8);
-        model.addButtons(b9);
+        addButtons(buttons);
+        setOpacityOnButtons(buttons);
         model.setGameIsOver(false);
         model.setCount(9);
     }
 
-
+    private void addButtons(List<Button> buttons){
+        buttons.add(b1);
+        buttons.add(b2);
+        buttons.add(b3);
+        buttons.add(b4);
+        buttons.add(b5);
+        buttons.add(b6);
+        buttons.add(b7);
+        buttons.add(b8);
+        buttons.add(b9);
+    }
+    private void setOpacityOnButtons(List<Button> buttons){
+        buttons.stream().forEach((e)-> e.setOpacity(1));
+    }
 
     public void setXandO(MouseEvent event) {
         model.XandO(event);
-
     }
-
 
     public void resetGame(MouseEvent event) {
         model.resetGame();
