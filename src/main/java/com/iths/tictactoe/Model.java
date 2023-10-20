@@ -17,9 +17,8 @@ import java.util.List;
 
 public class Model {
     private int count;
-    private int playerTurn;
     private StringProperty winnerName = new SimpleStringProperty();
-    private  int[][] arr = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
+    private int[][] arr = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
     private StringProperty message = new SimpleStringProperty();
     private final ReadOnlyStringProperty playerOne = new ReadOnlyStringWrapper("X");
     private final ReadOnlyStringProperty playerTwo = new ReadOnlyStringWrapper("O");
@@ -39,44 +38,13 @@ public class Model {
         button.setOpacity(1);
     }
 
-    public List<Button> getButtons() {
-        return buttons;
-    }
-
-    public String getMessage() {
-        return message.get();
-    }
-
-    public StringProperty messageProperty() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message.set(message);
-    }
 
     public String getPlayerOne() {
         return playerOne.get();
     }
 
-    public ReadOnlyStringProperty playerOneProperty() {
-        return playerOne;
-    }
-
     public String getPlayerTwo() {
         return playerTwo.get();
-    }
-
-    public ReadOnlyStringProperty playerTwoProperty() {
-        return playerTwo;
-    }
-
-    public int getPlayerTurn() {
-        return playerTurn;
-    }
-
-    public String getWinnerName() {
-        return winnerName.get();
     }
 
     public int getPlayerScore() {
@@ -123,31 +91,16 @@ public class Model {
         this.gameIsOver.set(gameIsOver);
     }
 
-    public void setPlayerTurn(int playerTurn) {
-        this.playerTurn = playerTurn;
-    }
-
     public void XandO(MouseEvent event) {
         Button clickedButton = (Button) event.getSource();
         clickedButton.setText(getPlayerOne());
         clickedButton.setDisable(true);
         --count;
-        if(!winner(arr,buttons).equals("XXX") || winner(arr,buttons).equals("OOO")){
+        winner(arr, buttons);
+        if (!isGameIsOver()) {
             computerPick();
+            winner(arr, buttons);
         }
-            var m = winner(arr,buttons);
-            switch (m){
-                case "XXX" -> {
-                    setWinnerName("Player Wins");
-                    setGameIsOver(true);
-                    setPlayerScore(getPlayerScore() + 1);
-                }
-                case "OOO" -> {
-                    setWinnerName("Computer Wins");
-                    setGameIsOver(true);
-                    setComputerScore(getComputerScore() + 1);
-                }
-            }
 
         //Player 2
         //            clickedButton.setText(getPlayerTwo());
@@ -169,31 +122,37 @@ public class Model {
         while (buttons.get(choise).isDisabled()) {
             choise = (int) (Math.random() * buttons.size());
         }
+       // if (playerOneTurn)
+         //   buttons.get(choise).setText(getPlayerOne());
         buttons.get(choise).setText(getPlayerTwo());
         buttons.get(choise).setDisable(true);
         --count;
     }
 
 
-    private String winner(int[][] arr, ObservableList <Button> buttons) {
+    private void winner(int[][] winCondition, ObservableList<Button> buttons) {
         StringBuilder possibleWinner;
         List<Button> tempList;
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < winCondition.length; i++) {
             tempList = new ArrayList<>();
             possibleWinner = new StringBuilder();
-            for (int j = 0; j < arr[i].length; j++) {
-                possibleWinner.append(buttons.get(arr[i][j]).getText());
-                tempList.add(buttons.get(arr[i][j]));
+            for (int j = 0; j < winCondition[i].length; j++) {
+                possibleWinner.append(buttons.get(winCondition[i][j]).getText());
+                tempList.add(buttons.get(winCondition[i][j]));
             }
             if (possibleWinner.toString().equals("XXX")) {
                 paintWinningButtons(tempList);
-                return "XXX";
-            } else if (possibleWinner.toString().equals("OOO")){
+                setWinnerName("Player Wins");
+                setGameIsOver(true);
+                setPlayerScore(getPlayerScore() + 1);
+
+            } else if (possibleWinner.toString().equals("OOO")) {
                 paintWinningButtons(tempList);
-                return "OOO";
+                setWinnerName("Computer Wins");
+                setGameIsOver(true);
+                setComputerScore(getComputerScore() + 1);
             }
         }
-        return "";
     }
 
     public void resetGame() {
@@ -224,9 +183,7 @@ public class Model {
                 Thread.sleep(20000);
                 Files.writeString(path, "HEHEHEHE");
                 System.out.println("File saved");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
+            } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -234,11 +191,23 @@ public class Model {
     }
 
     private static void paintWinningButtons(List<Button> tempList) {
-        tempList.stream().forEach((e)-> e.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, null, new BorderWidths(5)))));
-        tempList.stream().forEach((e)->e.setOpacity(1));
+        tempList.stream().forEach((e) -> e.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(5)))));
+        tempList.stream().forEach((e) -> e.setOpacity(1));
     }
 
-    public void setOpacity(ObservableList <Button> b){
-        b.stream().forEach((e)->e.setOpacity(1));
+    public void difficultyHard() {
+        if (count == 0) {
+            setWinnerName("NO WINNER!");
+            setGameIsOver(true);
+            return;
+        }
+        int choise = (int) (Math.random() * buttons.size() - 1);
+        calculateMove(choise);
+
+        //If playerOneturn == true. calculatemove should have condition to set playermark.
+        // boolean playerOneTurn = true;
     }
+
+
+
 }

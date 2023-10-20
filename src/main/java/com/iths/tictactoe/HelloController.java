@@ -18,9 +18,6 @@ import java.util.List;
 public class HelloController {
 
     @FXML
-    private Button buttonLeft;
-
-    @FXML
     private Label playerScore;
 
     @FXML
@@ -47,11 +44,10 @@ public class HelloController {
     @FXML
     private Button b9;
 
+
     @FXML
     private Label winnerName;
 
-    @FXML
-    private Button buttonRight;
     @FXML
     private Model model = new Model();
 
@@ -76,17 +72,16 @@ public class HelloController {
         model.addButtons(b8);
         model.addButtons(b9);
         model.setGameIsOver(false);
-        model.setPlayerTurn(1);
         model.setCount(9);
     }
 
-    public void onLabelClicked() {
-        //       model.setMessage("");
-    }
+
 
     public void setXandO(MouseEvent event) {
         model.XandO(event);
+
     }
+
 
     public void resetGame(MouseEvent event) {
         model.resetGame();
