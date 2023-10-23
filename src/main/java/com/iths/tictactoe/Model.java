@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 public class Model {
 
 
-    public IntegerProperty playerTurn = new SimpleIntegerProperty();
+    private IntegerProperty playerTurn = new SimpleIntegerProperty();
     private IntegerProperty emptySpotsLeft = new SimpleIntegerProperty();
     private StringProperty winnerName = new SimpleStringProperty();
 
@@ -29,11 +29,14 @@ public class Model {
     public ObservableList<Button> getButtons() {
         return buttons;
     }
+
     private final ReadOnlyStringProperty playerMarkOne = new ReadOnlyStringWrapper("X");
     private final ReadOnlyStringProperty playerMarkTwo = new ReadOnlyStringWrapper("O");
     private BooleanProperty gameIsOver = new SimpleBooleanProperty(); // The condition for each round
     private IntegerProperty playerScore = new SimpleIntegerProperty();
     private IntegerProperty computerScore = new SimpleIntegerProperty();
+
+    private ObservableList<Button> markedButtons = FXCollections.observableArrayList();
 
     public String getPlayerMarkOne() {
         return playerMarkOne.get();
@@ -95,10 +98,6 @@ public class Model {
         this.emptySpotsLeft.set(count);
     }
 
-    public int[][] getWinConditions() {
-        return winConditions;
-    }
-
     public int getPlayerTurn() {
         return playerTurn.get();
     }
@@ -115,16 +114,21 @@ public class Model {
         this.sizeOfButtonList.set(sizeOfButtonList);
     }
 
+
     public Integer computerPickTwo(int numberOfGameSpots) {
         return (int) (Math.random() * numberOfGameSpots);
     }
 
-    public Button grabAButton(int sizeOfList){
+    public ObservableList<Button> getMarkedButtons() {
+        return markedButtons;
+    }
+
+    public Button grabAButton(int sizeOfList) {
         var indexOfButton = computerPickTwo(sizeOfList);
         return getButtons().get(indexOfButton);
     }
 
-    public void theWinner(int winnersTurn) {
+    public void theWinnerIs(int winnersTurn) {
         if (winnersTurn == 1 || winnersTurn == 0) {
             if (winnersTurn == 1) {
                 setWinnerName("Player Wins");
@@ -152,5 +156,36 @@ public class Model {
 
     public String playerMark() {
         return getPlayerTurn() == 1 ? getPlayerMarkOne() : getPlayerMarkTwo();
+    }
+
+    public void checker() {
+        if (weHaveAWinner()) {
+            theWinnerIs(getPlayerTurn());
+        } else if (!weHaveAWinner() && getEmptySpotsLeft() == 0) {
+            setWinnerName("NO WINNER!");
+            setGameIsOver(true);
+        }
+    }
+
+    private boolean weHaveAWinner() {
+        StringBuilder str;
+        for (int i = 0; i < winConditions.length; i++) {
+            str = new StringBuilder();
+            str.append(getButtons().get(winConditions[i][0]).getText());
+            str.append(getButtons().get(winConditions[i][1]).getText());
+            str.append(getButtons().get(winConditions[i][2]).getText());
+
+            if (str.toString().equals("XXX") || str.toString().equals("OOO")) {
+                addButtonsToMarkedList(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void addButtonsToMarkedList(int i) {
+        markedButtons.add(getButtons().get(winConditions[i][0]));
+        markedButtons.add(getButtons().get(winConditions[i][1]));
+        markedButtons.add(getButtons().get(winConditions[i][2]));
     }
 }

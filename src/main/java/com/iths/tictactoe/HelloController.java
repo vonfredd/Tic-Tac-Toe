@@ -69,7 +69,7 @@ public class HelloController {
         model.setGameIsOver(false);
         model.setEmptySpotsLeft(9);
         model.setPlayerTurn(1);
-        model.setSizeOfButtonList(model.getButtons().size()-1);
+        model.setSizeOfButtonList(model.getButtons().size() - 1);
     }
 
     private void addButtons(List<Button> buttons) {
@@ -94,12 +94,12 @@ public class HelloController {
         markButton(event);
 
         //kolla om spelaren vunnit
-        checkRound(model.getWinConditions(), buttons);
+        checkRound();
 
         //låt datorn välja bricka om spelaren ej har vunnit, kolla därefter ifall datorn har vunnit.
         if (!model.isGameIsOver()) {
             computerPick();
-            checkRound(model.getWinConditions(), buttons);
+            checkRound();
         }
     }
 
@@ -155,13 +155,14 @@ public class HelloController {
     }
 
 
-
-    private static void resetButtons(List<Button> buttons) {
+    private void resetButtons(List<Button> buttons) {
         buttons.stream().forEach((e) -> {
             e.setBorder(null);
             e.setDisable(false);
             e.setText("");
         });
+
+        model.getMarkedButtons().removeAll(model.getMarkedButtons());
     }
 
     /*
@@ -170,28 +171,10 @@ public class HelloController {
         If there is no more empty spaces left and the game is not over, "NO WINNER" will be presented and the round will
         stop.
      */
-    private void checkRound(int[][] winCondition, List<Button> buttons) {
-        StringBuilder possibleWinner;
-        List<Button> colorWinners;
-
-        for (int i = 0; i < winCondition.length; i++) {
-            colorWinners = new ArrayList<>();
-            possibleWinner = new StringBuilder();
-
-            for (int j = 0; j < winCondition[i].length; j++) {
-                possibleWinner.append(buttons.get(winCondition[i][j]).getText());
-                colorWinners.add(buttons.get(winCondition[i][j]));
-            }
-
-            if (possibleWinner.toString().equals("XXX") || possibleWinner.toString().equals("OOO")) {
-                paintWinningButtons(colorWinners);
-                model.theWinner(model.getPlayerTurn());
-                break;
-            }
-        }
-        if (model.getEmptySpotsLeft() == 0 && !model.isGameIsOver()) {
-            model.setWinnerName("NO WINNER!");
-            model.setGameIsOver(true);
+    private void checkRound() {
+        model.checker();
+        if (model.isGameIsOver()) {
+            model.getMarkedButtons().stream().forEach((e) -> e.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(5)))));
         }
         model.setPlayerTurn(model.getPlayerTurn() == 1 ? 0 : 1);
     }
