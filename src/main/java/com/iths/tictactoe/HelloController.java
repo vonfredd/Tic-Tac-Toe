@@ -165,12 +165,7 @@ public class HelloController {
         model.getMarkedButtons().removeAll(model.getMarkedButtons());
     }
 
-    /*
-        check if there could be a winner. If there is a winner, the 3-in-row boxes will be highlighted and the winner
-        will be presented.
-        If there is no more empty spaces left and the game is not over, "NO WINNER" will be presented and the round will
-        stop.
-     */
+
     private void checkRound() {
         model.checker();
         if (model.isGameIsOver()) {

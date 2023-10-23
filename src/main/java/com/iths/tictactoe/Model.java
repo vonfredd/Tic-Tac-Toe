@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 
 public class Model {
 
-
     private IntegerProperty playerTurn = new SimpleIntegerProperty();
     private IntegerProperty emptySpotsLeft = new SimpleIntegerProperty();
     private StringProperty winnerName = new SimpleStringProperty();
@@ -78,6 +77,10 @@ public class Model {
         this.winnerName.set(winnerName);
     }
 
+    public String getWinnerName() {
+        return winnerName.get();
+    }
+
     public boolean isGameIsOver() {
         return gameIsOver.get();
     }
@@ -128,19 +131,6 @@ public class Model {
         return getButtons().get(indexOfButton);
     }
 
-    public void theWinnerIs(int winnersTurn) {
-        if (winnersTurn == 1 || winnersTurn == 0) {
-            if (winnersTurn == 1) {
-                setWinnerName("Player Wins");
-                setPlayerScore(getPlayerScore() + 1);
-            } else if (winnersTurn == 0) {
-                setWinnerName("Computer Wins");
-                setComputerScore(getComputerScore() + 1);
-            }
-            setGameIsOver(true);
-        }
-    }
-
 
     public void resetRound() {
         setGameIsOver(false);
@@ -159,15 +149,15 @@ public class Model {
     }
 
     public void checker() {
-        if (weHaveAWinner()) {
+        if (weHaveAWinner(addedWinConditionSymbols())) {
             theWinnerIs(getPlayerTurn());
-        } else if (!weHaveAWinner() && getEmptySpotsLeft() == 0) {
+        } else if (!weHaveAWinner(addedWinConditionSymbols()) && getEmptySpotsLeft() == 0) {
             setWinnerName("NO WINNER!");
             setGameIsOver(true);
         }
     }
 
-    private boolean weHaveAWinner() {
+    private String addedWinConditionSymbols() {
         StringBuilder str;
         for (int i = 0; i < winConditions.length; i++) {
             str = new StringBuilder();
@@ -177,10 +167,27 @@ public class Model {
 
             if (str.toString().equals("XXX") || str.toString().equals("OOO")) {
                 addButtonsToMarkedList(i);
-                return true;
+                return str.toString();
             }
         }
-        return false;
+        return "";
+    }
+
+    public boolean weHaveAWinner(String addedWinConditionSymbols) {
+        return addedWinConditionSymbols.equals("XXX") || addedWinConditionSymbols.equals("OOO");
+    }
+
+    public void theWinnerIs(int winnersTurn) {
+        if (winnersTurn == 1 || winnersTurn == 0) {
+            if (winnersTurn == 1) {
+                setWinnerName("Player Wins");
+                setPlayerScore(getPlayerScore() + 1);
+            } else if (winnersTurn == 0) {
+                setWinnerName("Computer Wins");
+                setComputerScore(getComputerScore() + 1);
+            }
+            setGameIsOver(true);
+        }
     }
 
     private void addButtonsToMarkedList(int i) {
