@@ -1,17 +1,13 @@
 package com.iths.tictactoe;
 
-import javafx.event.ActionEvent;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
-import javafx.stage.Window;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,23 +48,28 @@ public class HelloController {
 
     private List<Button> buttons;
 
+
     public Model getModel() {
         return model;
     }
 
     public void initialize() {
         pane.disableProperty().bind(model.gameIsOverProperty());
+        ObservableList<Button> modelList = model.getButtons();
+        buttons = new ArrayList<>();
+        addButtons(buttons);
+        setOpacityOnButtons(buttons);
+        modelList.addAll(buttons);
+
         winnerName.visibleProperty().bind(model.gameIsOverProperty());
         winnerName.textProperty().bind(model.winnerNameProperty());
         playerScore.textProperty().bind(model.playerScoreProperty().asString());
         computerScore.textProperty().bind(model.computerScoreProperty().asString());
-        buttons = new ArrayList<>();
-        addButtons(buttons);
-        setOpacityOnButtons(buttons);
 
         model.setGameIsOver(false);
         model.setEmptySpotsLeft(9);
         model.setPlayerTurn(1);
+        model.setSizeOfButtonList(model.getButtons().size()-1);
     }
 
     private void addButtons(List<Button> buttons) {
@@ -88,44 +89,72 @@ public class HelloController {
     }
 
     public void setXandO(MouseEvent event) {
-        model.setPlayerTurn(1);
-        Button clickedButton = (Button) event.getSource();
-        clickedButton.setText(model.getPlayerOne());
-        clickedButton.setDisable(true);
-        model.setEmptySpotsLeft(model.getEmptySpotsLeft() - 1);
 
-        winner(model.getWinConditions(), buttons);
+        //Välj bricka och markera den,
+        markButton(event);
 
+        //kolla om spelaren vunnit
+        checkRound(model.getWinConditions(), buttons);
+
+        //låt datorn välja bricka om spelaren ej har vunnit, kolla därefter ifall datorn har vunnit.
         if (!model.isGameIsOver()) {
-            model.setPlayerTurn(0);
             computerPick();
-            winner(model.getWinConditions(), buttons);
+            checkRound(model.getWinConditions(), buttons);
         }
     }
 
-    public void computerPick() {
-        if (model.getEmptySpotsLeft() == 0) {
-            model.setWinnerName("NO WINNER!");
-            model.setGameIsOver(true);
-            return;
-        }
-        int index = model.computerPickTwo(buttons.size() - 1);
-        while (buttons.get(index).isDisabled())
-            index = model.computerPickTwo(buttons.size() - 1);
-        buttons.get(index).setText(model.getPlayerTwo());
-        buttons.get(index).setDisable(true);
+
+    /*
+         markButton läser av ett event och baserat på det, fångar upp knappen som tryckts.
+         Skickar sedan vidare knappen till modifiering.
+    */
+    private void markButton(MouseEvent event) {
+        var buttonClicked = model.getButtons().stream().filter((e) -> e.equals(event.getSource())).findFirst().get();
+        modifyGrabbedButton(buttonClicked, model.playerMark());
+    }
+
+
+    /*
+        modifyGrabbedButton takes a button and a playermark (X,O) as a parameter.
+        based on that the button's fields changes based on the input parameters
+        and the number of available spots are decresed.
+     */
+    private void modifyGrabbedButton(Button button, String playerMark) {
+        button.setText(playerMark);
+        button.setDisable(true);
         model.setEmptySpotsLeft(model.getEmptySpotsLeft() - 1);
     }
 
+
+    /*
+        computerPick grabs a button and checks if the button is disabled. While the button that is grabbed is disabled,
+        a new button will be grabbed and checked. If the grabbed button has not been disabled, it will be modified.
+     */
+    public void computerPick() {
+        var button = model.grabAButton(model.getSizeOfButtonList());
+        while (button.isDisabled())
+            button = model.grabAButton(model.getSizeOfButtonList());
+        modifyGrabbedButton(button, model.playerMark());
+    }
+
+
+    /*
+        resets the entire game (Scores removed!) and resets the conditions
+     */
     public void resetGame() {
         resetRound();
         model.resetScore();
     }
 
+    /*
+        resets the buttons and conditions
+     */
     public void resetRound() {
         resetButtons(buttons);
         model.resetRound();
     }
+
+
 
     private static void resetButtons(List<Button> buttons) {
         buttons.stream().forEach((e) -> {
@@ -135,39 +164,44 @@ public class HelloController {
         });
     }
 
-    private void winner(int[][] winCondition, List<Button> buttons) {
+    /*
+        check if there could be a winner. If there is a winner, the 3-in-row boxes will be highlighted and the winner
+        will be presented.
+        If there is no more empty spaces left and the game is not over, "NO WINNER" will be presented and the round will
+        stop.
+     */
+    private void checkRound(int[][] winCondition, List<Button> buttons) {
         StringBuilder possibleWinner;
         List<Button> colorWinners;
+
         for (int i = 0; i < winCondition.length; i++) {
             colorWinners = new ArrayList<>();
             possibleWinner = new StringBuilder();
+
             for (int j = 0; j < winCondition[i].length; j++) {
                 possibleWinner.append(buttons.get(winCondition[i][j]).getText());
                 colorWinners.add(buttons.get(winCondition[i][j]));
             }
+
             if (possibleWinner.toString().equals("XXX") || possibleWinner.toString().equals("OOO")) {
                 paintWinningButtons(colorWinners);
                 model.theWinner(model.getPlayerTurn());
                 break;
             }
         }
+        if (model.getEmptySpotsLeft() == 0 && !model.isGameIsOver()) {
+            model.setWinnerName("NO WINNER!");
+            model.setGameIsOver(true);
+        }
+        model.setPlayerTurn(model.getPlayerTurn() == 1 ? 0 : 1);
     }
 
+
+    /*
+      the winning buttons will get a border that highlights them.
+     */
     private void paintWinningButtons(List<Button> colorWinners) {
         colorWinners.stream().forEach((e) -> e.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(5)))));
         colorWinners.stream().forEach((e) -> e.setOpacity(1));
-    }
-
-    public void onSaveButtonAction(ActionEvent event) {
-        Window window = ((Node) event.getSource()).getScene().getWindow();
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        File selectedFile = fileChooser.showOpenDialog(window);
-        if (selectedFile != null) {
-            //  model.saveToFile(selectedFile);
-        }
     }
 }
