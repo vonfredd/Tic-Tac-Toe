@@ -70,23 +70,19 @@ public class HelloController {
         buttons.add(b9);
 
         modelList.addAll(buttons);
-        model.addButtons();
-        Model.State GameState = Model.State.RUNNING;
+        model.setEmptySpaces(buttons.size());
 
     }
 
     public void pressedAButton(MouseEvent event) {
-
         Button clickedButton = (Button) event.getSource();
         addPlayersMarkAndDisable(clickedButton);
-        model.removeFromValidList(clickedButton);
         model.checkEnding();
         model.setNextTurn();
 
         if (!model.isGameOver()) {
             var computerButtonClicked = computerChoice();
             addPlayersMarkAndDisable(computerButtonClicked);
-            model.removeFromValidList(computerButtonClicked);
             model.checkEnding();
             model.setNextTurn();
         }
