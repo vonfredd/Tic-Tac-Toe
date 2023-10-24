@@ -86,11 +86,13 @@ public class HelloController {
 
         if (model.getGameState() == Model.GameState.RUNNING) {
             model.setNextTurn();
-            var computerButtonClicked = computerChoice();
-            addPlayerMarkAndDisable(computerButtonClicked);
+            addPlayerMarkAndDisable(computerChoice());
             model.checkState();
         }
+        adjustGameBasedOfState();
+    }
 
+    private void adjustGameBasedOfState() {
         switch (model.getGameState()) {
             case RUNNING -> model.setNextTurn();
             case WINNER -> model.theWinnerIs(model.getPlayerTurn());

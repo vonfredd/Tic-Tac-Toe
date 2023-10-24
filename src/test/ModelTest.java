@@ -11,7 +11,7 @@ private HelloController helloController;
 
     @BeforeEach
     void setUp() {
-        model = new Model(); // Initialize your model before each test
+        model = new Model();
 
     }
 
@@ -46,8 +46,11 @@ private HelloController helloController;
     @DisplayName("Test Noone wins")
     void noWinner(){
         model.setGameState(Model.GameState.NO_WINNER);
-        model.theWinnerIs(model.getPlayerTurn());
+        model.setEmptySpaces(0);
+        model.thereIsNoWinner();
         Assertions.assertNotEquals("COMPUTER WINS",model.getTheWinnerIs());
+        Assertions.assertNotEquals("PLAYER WINS",model.getTheWinnerIs());
         Assertions.assertEquals("NO WINNER",model.getTheWinnerIs());
     }
+
 }
