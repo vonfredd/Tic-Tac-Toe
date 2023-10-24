@@ -14,4 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ModelTest {
+private Model model;
+
+    @BeforeEach
+    void setUp() {
+        model = new Model(); // Initialize your model before each test
+    }
+
+    @Test
+    @DisplayName("Test game over property")
+    void testGameOverProperty() {
+        // You can write test cases here to check the behavior of your game over property
+        model.setGameOver(true);
+        Assertions.assertTrue(model.getGameOver());
+        model.setGameOver(false);
+        Assertions.assertFalse(model.getGameOver());
+    }
 }

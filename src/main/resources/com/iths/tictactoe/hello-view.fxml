@@ -64,23 +64,23 @@
     <center>
         <TilePane fx:id="pane" maxHeight="322" maxWidth="362" minHeight="322" minWidth="362"
                   style="-fx-background-color: Black; -fx-alignment: center; -fx-hgap: 5px; -fx-vgap: 5px; -fx-background-radius: 10;">
-            <Button fx:id="b1" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#setXandO"
+            <Button fx:id="b1" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#pressedAButton"
                     style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;"/>
-            <Button fx:id="b2" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#setXandO"
+            <Button fx:id="b2" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#pressedAButton"
                     style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;"/>
-            <Button fx:id="b3" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#setXandO"
+            <Button fx:id="b3" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#pressedAButton"
                     style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;"/>
-            <Button fx:id="b4" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#setXandO"
+            <Button fx:id="b4" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#pressedAButton"
                     style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;"/>
-            <Button fx:id="b5" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#setXandO"
+            <Button fx:id="b5" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#pressedAButton"
                     style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;"/>
-            <Button fx:id="b6" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#setXandO"
+            <Button fx:id="b6" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#pressedAButton"
                     style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;"/>
-            <Button fx:id="b7" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#setXandO"
+            <Button fx:id="b7" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#pressedAButton"
                     style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;"/>
-            <Button fx:id="b8" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#setXandO"
+            <Button fx:id="b8" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#pressedAButton"
                     style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;"/>
-            <Button fx:id="b9" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#setXandO"
+            <Button fx:id="b9" minHeight="100" minWidth="113" maxHeight="100" maxWidth="113" onMouseClicked="#pressedAButton"
                     style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;"/>
             <BorderPane.margin>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>

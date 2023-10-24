@@ -1,13 +1,11 @@
 package com.iths.tictactoe;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +56,8 @@ public class HelloController {
         pane.disableProperty().bind(model.gameOverProperty());
         model.setPlayerTurn(1);
         ObservableList<Button> modelList = model.getButtons();
+        winnerName.visibleProperty().bind(model.gameOverProperty());
+        winnerName.textProperty().bind(model.theWinnerIsProperty());
         buttons = new ArrayList<>();
         buttons.add(b1);
         buttons.add(b2);
@@ -70,35 +70,50 @@ public class HelloController {
         buttons.add(b9);
 
         modelList.addAll(buttons);
-
+        model.addButtons();
+        Model.State GameState = Model.State.RUNNING;
 
     }
 
-    public void setXandO(MouseEvent event) {
-        //while(index is not 0)
-            Button clickedButton = (Button) event.getSource();
-            addPlayersMarkAndDisable(clickedButton);
-            model.removeFromValidList(clickedButton);
-            addPlayersMarkAndDisable(computerChoise());
+    public void pressedAButton(MouseEvent event) {
 
-            model.checkWinner();
+        Button clickedButton = (Button) event.getSource();
+        addPlayersMarkAndDisable(clickedButton);
+        model.removeFromValidList(clickedButton);
+        model.checkEnding();
+        model.setNextTurn();
+
+        if (!model.isGameOver()) {
+            var computerButtonClicked = computerChoice();
+            addPlayersMarkAndDisable(computerButtonClicked);
+            model.removeFromValidList(computerButtonClicked);
+            model.checkEnding();
+            model.setNextTurn();
+        }
+
 
     }
 
 
     private void addPlayersMarkAndDisable(Button clickedButton) {
         clickedButton.setText(model.setPlayerMark());
-        model.setNextTurn();
         clickedButton.setDisable(true);
     }
 
-    private Button computerChoise() {
+    private Button computerChoice() {
         return model.randomButton();
     }
 
     public void resetRound(MouseEvent event) {
+        buttons.stream().forEach((e) -> {
+            e.setDisable(false);
+            e.setText("");
+        });
+        model.resetRound();
+
     }
 
     public void resetGame(MouseEvent event) {
+
     }
 }
