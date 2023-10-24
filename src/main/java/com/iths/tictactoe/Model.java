@@ -8,20 +8,17 @@ import javafx.scene.control.Button;
 public class Model {
 
     public enum GameState {
-        ROUND_ENDED,
         RUNNING,
         WINNER,
         NO_WINNER
     }
 
-    private BooleanProperty gameOver = new SimpleBooleanProperty();
-    private ObservableList<Button> buttons = FXCollections.observableArrayList();
-    private SimpleStringProperty theWinnerIs = new SimpleStringProperty();
-    private SimpleIntegerProperty playerTurn = new SimpleIntegerProperty();
-    private SimpleStringProperty playerMark = new SimpleStringProperty();
-    private SimpleStringProperty computerMark = new SimpleStringProperty();
-    private SimpleIntegerProperty playerScore = new SimpleIntegerProperty();
-    private SimpleIntegerProperty computerScore = new SimpleIntegerProperty();
+    private final BooleanProperty gameOver = new SimpleBooleanProperty();
+    private final ObservableList<Button> buttons = FXCollections.observableArrayList();
+    private final SimpleStringProperty theWinnerIs = new SimpleStringProperty();
+    private final SimpleIntegerProperty playerTurn = new SimpleIntegerProperty();
+    private final SimpleIntegerProperty playerScore = new SimpleIntegerProperty();
+    private final SimpleIntegerProperty computerScore = new SimpleIntegerProperty();
     private GameState gameState;
 
     public GameState getGameState() {
@@ -65,11 +62,6 @@ public class Model {
     public ObservableList<Button> getButtons() {
         return buttons;
     }
-
-    public boolean isGameOver() {
-        return gameOver.get();
-    }
-
 
     public SimpleStringProperty theWinnerIsProperty() {
         return theWinnerIs;
@@ -146,7 +138,7 @@ public class Model {
         return false;
     }
 
-    public void checkState() {
+    public void setGameState() {
         setEmptySpaces(getEmptySpaces() - 1);
 
         if (weHaveAWinner()) {
@@ -183,5 +175,12 @@ public class Model {
         setGameOver(false);
         setEmptySpaces(buttons.size());
         setGameState(GameState.RUNNING);
+    }
+    public void newGameState() {
+        switch (getGameState()) {
+            case RUNNING -> setNextTurn();
+            case WINNER -> theWinnerIs(getPlayerTurn());
+            case NO_WINNER -> thereIsNoWinner();
+        }
     }
 }

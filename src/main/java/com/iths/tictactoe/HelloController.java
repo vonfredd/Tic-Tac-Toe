@@ -43,15 +43,10 @@ public class HelloController {
     private Label winnerName;
 
     @FXML
-    private Model model = new Model();
+    private final Model model = new Model();
 
     private List<Button> buttons;
 
-    private Model.GameState gameState;
-
-    public Model getModel() {
-        return model;
-    }
 
     public void initialize() {
         pane.disableProperty().bind(model.gameOverProperty());
@@ -82,22 +77,18 @@ public class HelloController {
     public void pressedAButton(MouseEvent event) {
         Button clickedButton = (Button) event.getSource();
         addPlayerMarkAndDisable(clickedButton);
-        model.checkState();
+        model.setGameState();
 
         if (model.getGameState() == Model.GameState.RUNNING) {
             model.setNextTurn();
             addPlayerMarkAndDisable(computerChoice());
-            model.checkState();
+            model.setGameState();
         }
         adjustGameBasedOfState();
     }
 
     private void adjustGameBasedOfState() {
-        switch (model.getGameState()) {
-            case RUNNING -> model.setNextTurn();
-            case WINNER -> model.theWinnerIs(model.getPlayerTurn());
-            case NO_WINNER -> model.thereIsNoWinner();
-        }
+        model.newGameState();
     }
 
     private void addPlayerMarkAndDisable(Button clickedButton) {

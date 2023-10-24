@@ -16,16 +16,6 @@ private HelloController helloController;
     }
 
     @Test
-    @DisplayName("Test game over property")
-    void testGameOverProperty() {
-        // You can write test cases here to check the behavior of your game over property
-        model.setGameOver(true);
-        Assertions.assertTrue(model.getGameOver());
-        model.setGameOver(false);
-        Assertions.assertFalse(model.getGameOver());
-    }
-
-    @Test
     @DisplayName("Test playerWins")
     void thePlayerWins(){
         model.setGameState(Model.GameState.WINNER);
@@ -43,7 +33,7 @@ private HelloController helloController;
         Assertions.assertEquals("COMPUTER WINS",model.getTheWinnerIs());
     }
     @Test
-    @DisplayName("Test Noone wins")
+    @DisplayName("Test no-one wins")
     void noWinner(){
         model.setGameState(Model.GameState.NO_WINNER);
         model.setEmptySpaces(0);
@@ -52,5 +42,6 @@ private HelloController helloController;
         Assertions.assertNotEquals("PLAYER WINS",model.getTheWinnerIs());
         Assertions.assertEquals("NO WINNER",model.getTheWinnerIs());
     }
+
 
 }
