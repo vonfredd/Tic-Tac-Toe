@@ -7,12 +7,31 @@ import javafx.scene.control.Button;
 
 public class Model {
 
+    public enum GameState {
+        ROUND_ENDED,
+        RUNNING,
+        WINNER,
+        NO_WINNER
+    }
+
     private BooleanProperty gameOver = new SimpleBooleanProperty();
     private ObservableList<Button> buttons = FXCollections.observableArrayList();
     private SimpleStringProperty theWinnerIs = new SimpleStringProperty();
     private SimpleIntegerProperty playerTurn = new SimpleIntegerProperty();
     private SimpleStringProperty playerMark = new SimpleStringProperty();
     private SimpleStringProperty computerMark = new SimpleStringProperty();
+    private SimpleIntegerProperty playerScore = new SimpleIntegerProperty();
+    private SimpleIntegerProperty computerScore = new SimpleIntegerProperty();
+    private GameState gameState;
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
     private int emptySpaces;
 
     public void setEmptySpaces(int emptySpaces) {
@@ -39,10 +58,6 @@ public class Model {
         return playerTurn.get();
     }
 
-    public SimpleIntegerProperty playerTurnProperty() {
-        return playerTurn;
-    }
-
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn.set(playerTurn);
     }
@@ -64,6 +79,34 @@ public class Model {
         this.theWinnerIs.set(theWinnerIs);
     }
 
+    public String getTheWinnerIs() {
+        return theWinnerIs.get();
+    }
+
+    public Integer getPlayerScore() {
+        return playerScore.get();
+    }
+
+    public SimpleIntegerProperty playerScoreProperty() {
+        return playerScore;
+    }
+
+    public void setPlayerScore(Integer playerScore) {
+        this.playerScore.set(playerScore);
+    }
+
+    public Integer getComputerScore() {
+        return computerScore.get();
+    }
+
+    public SimpleIntegerProperty computerScoreProperty() {
+        return computerScore;
+    }
+
+    public void setComputerScore(Integer computerScore) {
+        this.computerScore.set(computerScore);
+    }
+
     private final int[][] winConditions = {
             {0, 1, 2},
             {3, 4, 5},
@@ -74,7 +117,7 @@ public class Model {
             {0, 4, 8},
             {2, 4, 6}}; // if a player has its mark on all indexes in a row, the player will be presented as WINNER
 
-    public Button randomButton() {
+    public Button randomButton(ObservableList<Button> buttons) {
         var randomedButton = getButtons().get((int) (Math.random() * getButtons().size() - 1));
         while (randomedButton.isDisabled()) {
             randomedButton = getButtons().get((int) (Math.random() * getButtons().size() - 1));
@@ -103,30 +146,42 @@ public class Model {
         return false;
     }
 
-    public void checkEnding() {
-        setEmptySpaces(getEmptySpaces()-1);
+    public void checkState() {
+        setEmptySpaces(getEmptySpaces() - 1);
 
         if (weHaveAWinner()) {
-            theWinnerIs();
-        } else if (getEmptySpaces() == 0) {
-            setTheWinnerIs("NO WINNER");
-            setGameOver(true);
-        }
-
+            setGameState(GameState.WINNER);
+        } else if (!weHaveAWinner() && getEmptySpaces() == 0) {
+            setGameState(GameState.NO_WINNER);
+        } else
+            setGameState(GameState.RUNNING);
     }
 
-    public void theWinnerIs() {
-        if (getPlayerTurn() == 1) {
-            setTheWinnerIs("PLAYER WINS");
-        } else {
-            setTheWinnerIs("COMPUTER WINS");
-        }
+
+    public void theWinnerIs(int playerTurn) {
+        String winner = playerTurn == 1 ? "PLAYER WINS" : "COMPUTER WINS";
+        setTheWinnerIs(winner);
+        addToWinnerScore(winner);
         setGameOver(true);
+    }
+
+    public void thereIsNoWinner(){
+        setTheWinnerIs("NO WINNER");
+        setGameOver(true);
+    }
+
+    public void addToWinnerScore(String winnerName) {
+        if (winnerName.equals("PLAYER WINS")) {
+            setPlayerScore(getPlayerScore() + 1);
+        } else if (winnerName.equals("COMPUTER WINS")) {
+            setComputerScore(getComputerScore() + 1);
+        }
     }
 
     public void resetRound() {
         setPlayerTurn(1);
         setGameOver(false);
         setEmptySpaces(buttons.size());
+        setGameState(GameState.RUNNING);
     }
 }

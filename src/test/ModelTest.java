@@ -1,24 +1,18 @@
-import com.iths.tictactoe.HelloApplication;
 import com.iths.tictactoe.HelloController;
 import com.iths.tictactoe.Model;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 class ModelTest {
 private Model model;
+private HelloController helloController;
 
     @BeforeEach
     void setUp() {
         model = new Model(); // Initialize your model before each test
+
     }
 
     @Test
@@ -29,5 +23,31 @@ private Model model;
         Assertions.assertTrue(model.getGameOver());
         model.setGameOver(false);
         Assertions.assertFalse(model.getGameOver());
+    }
+
+    @Test
+    @DisplayName("Test playerWins")
+    void thePlayerWins(){
+        model.setGameState(Model.GameState.WINNER);
+        model.setPlayerTurn(1);
+        model.theWinnerIs(model.getPlayerTurn());
+        Assertions.assertEquals("PLAYER WINS",model.getTheWinnerIs());
+    }
+
+    @Test
+    @DisplayName("Test computerWins")
+    void theComputerWins(){
+        model.setGameState(Model.GameState.WINNER);
+        model.setPlayerTurn(0);
+        model.theWinnerIs(model.getPlayerTurn());
+        Assertions.assertEquals("COMPUTER WINS",model.getTheWinnerIs());
+    }
+    @Test
+    @DisplayName("Test Noone wins")
+    void noWinner(){
+        model.setGameState(Model.GameState.NO_WINNER);
+        model.theWinnerIs(model.getPlayerTurn());
+        Assertions.assertNotEquals("COMPUTER WINS",model.getTheWinnerIs());
+        Assertions.assertEquals("NO WINNER",model.getTheWinnerIs());
     }
 }

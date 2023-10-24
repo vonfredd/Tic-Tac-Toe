@@ -47,6 +47,7 @@ public class HelloController {
 
     private List<Button> buttons;
 
+    private Model.GameState gameState;
 
     public Model getModel() {
         return model;
@@ -58,6 +59,8 @@ public class HelloController {
         ObservableList<Button> modelList = model.getButtons();
         winnerName.visibleProperty().bind(model.gameOverProperty());
         winnerName.textProperty().bind(model.theWinnerIsProperty());
+        playerScore.textProperty().bind(model.playerScoreProperty().asString());
+        computerScore.textProperty().bind(model.computerScoreProperty().asString());
         buttons = new ArrayList<>();
         buttons.add(b1);
         buttons.add(b2);
@@ -68,48 +71,51 @@ public class HelloController {
         buttons.add(b7);
         buttons.add(b8);
         buttons.add(b9);
-
+        buttons.stream().forEach((e) -> e.setOpacity(1));
         modelList.addAll(buttons);
         model.setEmptySpaces(buttons.size());
+
+        model.setGameState(Model.GameState.RUNNING);
 
     }
 
     public void pressedAButton(MouseEvent event) {
         Button clickedButton = (Button) event.getSource();
-        addPlayersMarkAndDisable(clickedButton);
-        model.checkEnding();
-        model.setNextTurn();
+        addPlayerMarkAndDisable(clickedButton);
+        model.checkState();
 
-        if (!model.isGameOver()) {
-            var computerButtonClicked = computerChoice();
-            addPlayersMarkAndDisable(computerButtonClicked);
-            model.checkEnding();
+        if (model.getGameState() == Model.GameState.RUNNING) {
             model.setNextTurn();
+            var computerButtonClicked = computerChoice();
+            addPlayerMarkAndDisable(computerButtonClicked);
+            model.checkState();
         }
 
-
+        switch (model.getGameState()) {
+            case RUNNING -> model.setNextTurn();
+            case WINNER -> model.theWinnerIs(model.getPlayerTurn());
+            case NO_WINNER -> model.thereIsNoWinner();
+        }
     }
 
-
-    private void addPlayersMarkAndDisable(Button clickedButton) {
+    private void addPlayerMarkAndDisable(Button clickedButton) {
         clickedButton.setText(model.setPlayerMark());
         clickedButton.setDisable(true);
     }
 
     private Button computerChoice() {
-        return model.randomButton();
+        return model.randomButton(model.getButtons());
     }
 
-    public void resetRound(MouseEvent event) {
+    public void resetRound() {
         buttons.stream().forEach((e) -> {
             e.setDisable(false);
             e.setText("");
         });
         model.resetRound();
-
     }
 
-    public void resetGame(MouseEvent event) {
+    public void resetGame() {
 
     }
 }
