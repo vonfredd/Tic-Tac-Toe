@@ -154,12 +154,10 @@ public class Model {
         String winner = playerTurn == 1 ? "PLAYER WINS" : "COMPUTER WINS";
         setTheWinnerIs(winner);
         addToWinnerScore(winner);
-        setGameOver(true);
     }
 
     public void thereIsNoWinner(){
         setTheWinnerIs("NO WINNER");
-        setGameOver(true);
     }
 
     public void addToWinnerScore(String winnerName) {
@@ -179,8 +177,14 @@ public class Model {
     public void newGameState() {
         switch (getGameState()) {
             case RUNNING -> setNextTurn();
-            case WINNER -> theWinnerIs(getPlayerTurn());
-            case NO_WINNER -> thereIsNoWinner();
+            case WINNER -> {
+                theWinnerIs(getPlayerTurn());
+                setGameOver(true);
+            }
+            case NO_WINNER -> {
+                thereIsNoWinner();
+                setGameOver(true);
+            }
         }
     }
 }

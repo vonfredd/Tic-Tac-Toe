@@ -6,8 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ModelTest {
-private Model model;
-private HelloController helloController;
+    private Model model;
 
     @BeforeEach
     void setUp() {
@@ -16,32 +15,56 @@ private HelloController helloController;
     }
 
     @Test
-    @DisplayName("Test playerWins")
-    void thePlayerWins(){
+    @DisplayName("playerWins")
+    void thePlayerWins() {
         model.setGameState(Model.GameState.WINNER);
         model.setPlayerTurn(1);
         model.theWinnerIs(model.getPlayerTurn());
-        Assertions.assertEquals("PLAYER WINS",model.getTheWinnerIs());
+        Assertions.assertEquals("PLAYER WINS", model.getTheWinnerIs());
     }
 
     @Test
-    @DisplayName("Test computerWins")
-    void theComputerWins(){
+    @DisplayName("computerWins")
+    void theComputerWins() {
         model.setGameState(Model.GameState.WINNER);
         model.setPlayerTurn(0);
         model.theWinnerIs(model.getPlayerTurn());
-        Assertions.assertEquals("COMPUTER WINS",model.getTheWinnerIs());
+        Assertions.assertEquals("COMPUTER WINS", model.getTheWinnerIs());
     }
+
     @Test
-    @DisplayName("Test no-one wins")
-    void noWinner(){
+    @DisplayName("no-one wins")
+    void noWinner() {
         model.setGameState(Model.GameState.NO_WINNER);
         model.setEmptySpaces(0);
         model.thereIsNoWinner();
-        Assertions.assertNotEquals("COMPUTER WINS",model.getTheWinnerIs());
-        Assertions.assertNotEquals("PLAYER WINS",model.getTheWinnerIs());
-        Assertions.assertEquals("NO WINNER",model.getTheWinnerIs());
+        Assertions.assertNotEquals("COMPUTER WINS", model.getTheWinnerIs());
+        Assertions.assertNotEquals("PLAYER WINS", model.getTheWinnerIs());
+        Assertions.assertEquals("NO WINNER", model.getTheWinnerIs());
     }
 
+    @Test
+    @DisplayName("check if round is over when there is no winner")
+    void roundIsOverWhenThereIsNoWinner() {
+        model.setGameState(Model.GameState.NO_WINNER);
+        model.newGameState();
+        Assertions.assertTrue(model.getGameOver());
+    }
+
+    @Test
+    @DisplayName("check if round is over when there is a winner")
+    void roundIsOverWhenThereIsAWinner() {
+        model.setGameState(Model.GameState.WINNER);
+        model.newGameState();
+        Assertions.assertTrue(model.getGameOver());
+    }
+
+    @Test
+    @DisplayName("check if round is not over when game is running")
+    void roundIsNotOverWhenGameIsRunning() {
+        model.setGameState(Model.GameState.RUNNING);
+        model.newGameState();
+        Assertions.assertFalse(model.getGameOver());
+    }
 
 }
