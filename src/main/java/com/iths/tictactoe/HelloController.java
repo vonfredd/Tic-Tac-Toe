@@ -84,10 +84,10 @@ public class HelloController {
             addPlayerMarkAndDisable(computerChoice());
             model.setGameState();
         }
-        adjustGameBasedOfState();
+        adjustGameBasedOfGamestate();
     }
 
-    private void adjustGameBasedOfState() {
+    private void adjustGameBasedOfGamestate() {
         model.implementGamestate();
     }
 

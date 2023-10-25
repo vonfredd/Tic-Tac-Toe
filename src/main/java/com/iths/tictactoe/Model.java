@@ -154,19 +154,18 @@ public class Model {
     public void theWinnerIs(int playerTurn) {
         String winner = playerTurn == 1 ? "PLAYER WINS" : "COMPUTER WINS";
         setTheWinnerIs(winner);
-        addToWinnerScore(winner);
+        addToWinnerScore(playerTurn);
     }
 
     public void thereIsNoWinner(){
         setTheWinnerIs("NO WINNER");
     }
 
-    public void addToWinnerScore(String winnerName) {
-        if (winnerName.equals("PLAYER WINS")) {
+    public void addToWinnerScore(int playerTurn) {
+        if (playerTurn == 1) {
             setPlayerScore(getPlayerScore() + 1);
-        } else if (winnerName.equals("COMPUTER WINS")) {
+        } else
             setComputerScore(getComputerScore() + 1);
-        }
     }
 
     public void resetRound() {
