@@ -88,7 +88,7 @@ public class HelloController {
     }
 
     private void adjustGameBasedOfState() {
-        model.newGameState();
+        model.implementGamestate();
     }
 
     private void addPlayerMarkAndDisable(Button clickedButton) {
@@ -101,14 +101,19 @@ public class HelloController {
     }
 
     public void resetRound() {
-        buttons.stream().forEach((e) -> {
-            e.setDisable(false);
-            e.setText("");
-        });
+        resetButtons();
         model.resetRound();
     }
 
     public void resetGame() {
+        resetButtons();
+        model.resetGame();
+    }
 
+    private void resetButtons() {
+        buttons.stream().forEach((e) -> {
+            e.setDisable(false);
+            e.setText("");
+        });
     }
 }

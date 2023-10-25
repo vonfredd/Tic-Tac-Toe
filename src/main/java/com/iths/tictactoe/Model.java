@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 
 public class Model {
 
+
     public enum GameState {
         RUNNING,
         WINNER,
@@ -174,7 +175,13 @@ public class Model {
         setEmptySpaces(buttons.size());
         setGameState(GameState.RUNNING);
     }
-    public void newGameState() {
+
+    public void resetGame() {
+        resetRound();
+        setPlayerScore(0);
+        setComputerScore(0);
+    }
+    public void implementGamestate() {
         switch (getGameState()) {
             case RUNNING -> setNextTurn();
             case WINNER -> {

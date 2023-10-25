@@ -1,4 +1,3 @@
-import com.iths.tictactoe.HelloController;
 import com.iths.tictactoe.Model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +10,6 @@ class ModelTest {
     @BeforeEach
     void setUp() {
         model = new Model();
-
     }
 
     @Test
@@ -47,7 +45,7 @@ class ModelTest {
     @DisplayName("check if round is over when there is no winner")
     void roundIsOverWhenThereIsNoWinner() {
         model.setGameState(Model.GameState.NO_WINNER);
-        model.newGameState();
+        model.implementGamestate();
         Assertions.assertTrue(model.getGameOver());
     }
 
@@ -55,7 +53,7 @@ class ModelTest {
     @DisplayName("check if round is over when there is a winner")
     void roundIsOverWhenThereIsAWinner() {
         model.setGameState(Model.GameState.WINNER);
-        model.newGameState();
+        model.implementGamestate();
         Assertions.assertTrue(model.getGameOver());
     }
 
@@ -63,8 +61,7 @@ class ModelTest {
     @DisplayName("check if round is not over when game is running")
     void roundIsNotOverWhenGameIsRunning() {
         model.setGameState(Model.GameState.RUNNING);
-        model.newGameState();
+        model.implementGamestate();
         Assertions.assertFalse(model.getGameOver());
     }
-
 }
