@@ -1,14 +1,25 @@
+import com.iths.tictactoe.HelloApplication;
+import com.iths.tictactoe.HelloController;
 import com.iths.tictactoe.Model;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.IOException;
+
+
 class ModelTest {
     private Model model;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         model = new Model();
     }
 
@@ -18,7 +29,7 @@ class ModelTest {
         model.setGameState(Model.GameState.WINNER);
         model.setPlayerTurn(1);
         model.theWinnerIs(model.getPlayerTurn());
-        Assertions.assertEquals("PLAYER WINS", model.getTheWinnerIs());
+        assertEquals("PLAYER WINS", model.getTheWinnerIs());
     }
 
     @Test
@@ -27,7 +38,7 @@ class ModelTest {
         model.setGameState(Model.GameState.WINNER);
         model.setPlayerTurn(0);
         model.theWinnerIs(model.getPlayerTurn());
-        Assertions.assertEquals("COMPUTER WINS", model.getTheWinnerIs());
+        assertEquals("COMPUTER WINS", model.getTheWinnerIs());
     }
 
     @Test
@@ -36,9 +47,9 @@ class ModelTest {
         model.setGameState(Model.GameState.NO_WINNER);
         model.setEmptySpaces(0);
         model.thereIsNoWinner();
-        Assertions.assertNotEquals("COMPUTER WINS", model.getTheWinnerIs());
-        Assertions.assertNotEquals("PLAYER WINS", model.getTheWinnerIs());
-        Assertions.assertEquals("NO WINNER", model.getTheWinnerIs());
+        assertNotEquals("COMPUTER WINS", model.getTheWinnerIs());
+        assertNotEquals("PLAYER WINS", model.getTheWinnerIs());
+        assertEquals("NO WINNER", model.getTheWinnerIs());
     }
 
     @Test
@@ -46,7 +57,7 @@ class ModelTest {
     void roundIsOverWhenThereIsNoWinner() {
         model.setGameState(Model.GameState.NO_WINNER);
         model.implementGamestate();
-        Assertions.assertTrue(model.getGameOver());
+        assertTrue(model.getGameOver());
     }
 
     @Test
@@ -54,7 +65,7 @@ class ModelTest {
     void roundIsOverWhenThereIsAWinner() {
         model.setGameState(Model.GameState.WINNER);
         model.implementGamestate();
-        Assertions.assertTrue(model.getGameOver());
+        assertTrue(model.getGameOver());
     }
 
     @Test
@@ -62,6 +73,14 @@ class ModelTest {
     void roundIsNotOverWhenGameIsRunning() {
         model.setGameState(Model.GameState.RUNNING);
         model.implementGamestate();
-        Assertions.assertFalse(model.getGameOver());
+        assertFalse(model.getGameOver());
     }
+
+    @Test
+    @DisplayName("Randomed button is not disabled")
+    void checkIfRandomButtonIsOk() {
+
+
+    }
+
 }

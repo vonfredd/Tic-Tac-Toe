@@ -111,9 +111,9 @@ public class Model {
             {2, 4, 6}}; // if a player has its mark on all indexes in a row, the player will be presented as WINNER
 
     public Button randomButton(ObservableList<Button> buttons) {
-        var randomedButton = getButtons().get((int) (Math.random() * getButtons().size() - 1));
+        var randomedButton = buttons.get((int) (Math.random() * getButtons().size() - 1));
         while (randomedButton.isDisabled()) {
-            randomedButton = getButtons().get((int) (Math.random() * getButtons().size() - 1));
+            randomedButton = buttons.get((int) (Math.random() * getButtons().size() - 1));
         }
         return randomedButton;
     }
