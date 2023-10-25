@@ -76,11 +76,4 @@ class ModelTest {
         assertFalse(model.getGameOver());
     }
 
-    @Test
-    @DisplayName("Randomed button is not disabled")
-    void checkIfRandomButtonIsOk() {
-
-
-    }
-
 }
