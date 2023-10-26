@@ -106,7 +106,7 @@ public class Model {
             {1, 4, 7},
             {2, 5, 8},
             {0, 4, 8},
-            {2, 4, 6}}; // if a player has its mark on all indexes in a row, the player will be presented as WINNER
+            {2, 4, 6}};
 
     public Button randomButton(ObservableList<Button> buttons) {
         var randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
@@ -123,7 +123,6 @@ public class Model {
     public String setPlayerMark() {
         return getPlayerTurn() == 1 ? "X" : "O";
     }
-
 
     public void theWinnerIs(int playerTurn) {
         String winner = playerTurn == 1 ? "PLAYER WINS" : "COMPUTER WINS";
