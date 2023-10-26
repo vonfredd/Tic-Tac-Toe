@@ -49,13 +49,19 @@ public class HelloController {
 
 
     public void initialize() {
-        pane.disableProperty().bind(model.gameOverProperty());
-        model.setPlayerTurn(1);
+        boundProperties();
         ObservableList<Button> modelList = model.getButtons();
-        winnerName.visibleProperty().bind(model.gameOverProperty());
-        winnerName.textProperty().bind(model.theWinnerIsProperty());
-        playerScore.textProperty().bind(model.playerScoreProperty().asString());
-        computerScore.textProperty().bind(model.computerScoreProperty().asString());
+        addButtonsFromFXML();
+        buttons.stream().forEach((e) -> e.setOpacity(1));
+
+        modelList.addAll(buttons);
+        model.setEmptySpaces(buttons.size());
+        model.setGameState(Model.GameState.RUNNING);
+        model.setPlayerTurn(1);
+
+    }
+
+    private void addButtonsFromFXML() {
         buttons = new ArrayList<>();
         buttons.add(b1);
         buttons.add(b2);
@@ -66,11 +72,15 @@ public class HelloController {
         buttons.add(b7);
         buttons.add(b8);
         buttons.add(b9);
-        buttons.stream().forEach((e) -> e.setOpacity(1));
-        modelList.addAll(buttons);
-        model.setEmptySpaces(buttons.size());
+    }
 
-        model.setGameState(Model.GameState.RUNNING);
+    private void boundProperties() {
+        pane.disableProperty().bind(model.gameOverProperty());
+        winnerName.visibleProperty().bind(model.gameOverProperty());
+        winnerName.textProperty().bind(model.theWinnerIsProperty());
+        playerScore.textProperty().bind(model.playerScoreProperty().asString());
+        computerScore.textProperty().bind(model.computerScoreProperty().asString());
+
 
     }
 
