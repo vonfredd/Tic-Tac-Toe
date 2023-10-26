@@ -1,6 +1,5 @@
 package com.iths.tictactoe;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -47,21 +46,17 @@ public class HelloController {
 
     private List<Button> buttons;
 
-
     public void initialize() {
-        boundProperties();
-        ObservableList<Button> modelList = model.getButtons();
-        addButtonsFromFXML();
+        addBoardGameButtonsFromFXML();
+        model.addButtonsToV5List();
+        bindProperties();
         buttons.stream().forEach((e) -> e.setOpacity(1));
-
-        modelList.addAll(buttons);
         model.setEmptySpaces(buttons.size());
         model.setGameState(Model.GameState.RUNNING);
         model.setPlayerTurn(1);
-
     }
 
-    private void addButtonsFromFXML() {
+    private void addBoardGameButtonsFromFXML() {
         buttons = new ArrayList<>();
         buttons.add(b1);
         buttons.add(b2);
@@ -74,56 +69,28 @@ public class HelloController {
         buttons.add(b9);
     }
 
-    private void boundProperties() {
+    private void bindProperties() {
         pane.disableProperty().bind(model.gameOverProperty());
         winnerName.visibleProperty().bind(model.gameOverProperty());
         winnerName.textProperty().bind(model.theWinnerIsProperty());
         playerScore.textProperty().bind(model.playerScoreProperty().asString());
         computerScore.textProperty().bind(model.computerScoreProperty().asString());
 
-
+        for (int i = 0; i < buttons.size(); i++) {
+            buttons.get(i).textProperty().bindBidirectional(model.getV5Buttons().get(i).textProperty());
+            buttons.get(i).disableProperty().bindBidirectional(model.getV5Buttons().get(i).disableProperty());
+        }
     }
 
     public void pressedAButton(MouseEvent event) {
-        Button clickedButton = (Button) event.getSource();
-        addPlayerMarkAndDisable(clickedButton);
-        model.setGameState();
-
-        if (model.getGameState() == Model.GameState.RUNNING) {
-            model.setNextTurn();
-            addPlayerMarkAndDisable(computerChoice());
-            model.setGameState();
-        }
-        adjustGameBasedOfGamestate();
-    }
-
-    private void adjustGameBasedOfGamestate() {
-        model.implementGamestate();
-    }
-
-    private void addPlayerMarkAndDisable(Button clickedButton) {
-        clickedButton.setText(model.setPlayerMark());
-        clickedButton.setDisable(true);
-    }
-
-    private Button computerChoice() {
-        return model.randomButton(model.getButtons());
+        model.gameLogicStarter((Button) event.getSource());
     }
 
     public void resetRound() {
-        resetButtons();
         model.resetRound();
     }
 
     public void resetGame() {
-        resetButtons();
         model.resetGame();
-    }
-
-    private void resetButtons() {
-        buttons.stream().forEach((e) -> {
-            e.setDisable(false);
-            e.setText("");
-        });
     }
 }

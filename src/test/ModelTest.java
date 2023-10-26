@@ -48,24 +48,21 @@ class ModelTest {
     @Test
     @DisplayName("check if round is over when there is no winner")
     void roundIsOverWhenThereIsNoWinner() {
-        model.setGameState(Model.GameState.NO_WINNER);
-        model.implementGamestate();
+        model.implementGamestate(Model.GameState.NO_WINNER);
         assertTrue(model.getGameOver());
     }
 
     @Test
     @DisplayName("check if round is over when there is a winner")
     void roundIsOverWhenThereIsAWinner() {
-        model.setGameState(Model.GameState.WINNER);
-        model.implementGamestate();
+        model.implementGamestate(Model.GameState.WINNER);
         assertTrue(model.getGameOver());
     }
 
     @Test
     @DisplayName("check if round is not over when game is running")
     void roundIsNotOverWhenGameIsRunning() {
-        model.setGameState(Model.GameState.RUNNING);
-        model.implementGamestate();
+        model.implementGamestate(Model.GameState.RUNNING);
         assertFalse(model.getGameOver());
     }
 
