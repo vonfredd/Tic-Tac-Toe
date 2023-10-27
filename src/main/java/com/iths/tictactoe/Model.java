@@ -8,8 +8,8 @@ import javafx.scene.control.Button;
 import java.util.Arrays;
 
 public class Model {
-    ObservableList<SimpleStringProperty> markingOfButtons = FXCollections.observableArrayList();
-    ObservableList<SimpleBooleanProperty> disabledButtons = FXCollections.observableArrayList();
+    private final ObservableList<SimpleStringProperty> markingOfButtons = FXCollections.observableArrayList();
+    private final ObservableList<SimpleBooleanProperty> disabledButtons = FXCollections.observableArrayList();
 
     public void addToMarkingOfButtons() {
         markingOfButtons.add(new SimpleStringProperty(""));
@@ -75,7 +75,6 @@ public class Model {
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
-
 
     public void setEmptySpaces(int emptySpaces) {
         this.emptySpaces = emptySpaces;

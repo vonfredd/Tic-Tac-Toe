@@ -90,8 +90,6 @@ public class HelloController {
     public void pressedAButton(MouseEvent event) {
 
         model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
-
-        //model.gameLogicStarter((Button) event.getSource());
     }
 
     public void resetRound() {
