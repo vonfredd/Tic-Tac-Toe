@@ -48,7 +48,6 @@ public class HelloController {
 
     public void initialize() {
         addBoardGameButtonsFromFXML();
-        model.addButtonsToV5List();
         bindProperties();
         buttons.stream().forEach((e) -> e.setOpacity(1));
         model.setEmptySpaces(buttons.size());
@@ -70,6 +69,12 @@ public class HelloController {
     }
 
     private void bindProperties() {
+        model.setButtonsDisable();
+        model.addToMarkingOfButtons();
+
+
+
+
         pane.disableProperty().bind(model.gameOverProperty());
         winnerName.visibleProperty().bind(model.gameOverProperty());
         winnerName.textProperty().bind(model.theWinnerIsProperty());
@@ -77,13 +82,16 @@ public class HelloController {
         computerScore.textProperty().bind(model.computerScoreProperty().asString());
 
         for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).textProperty().bindBidirectional(model.getV5Buttons().get(i).textProperty());
-            buttons.get(i).disableProperty().bindBidirectional(model.getV5Buttons().get(i).disableProperty());
+            buttons.get(i).textProperty().bind(model.getMarkingOfButtons().get(i));
+            buttons.get(i).disableProperty().bind(model.getDisabledButtons().get(i));
         }
     }
 
     public void pressedAButton(MouseEvent event) {
-        model.gameLogicStarter((Button) event.getSource());
+
+        model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
+
+        //model.gameLogicStarter((Button) event.getSource());
     }
 
     public void resetRound() {

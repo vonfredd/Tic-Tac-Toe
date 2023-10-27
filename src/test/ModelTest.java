@@ -1,8 +1,5 @@
 import com.iths.tictactoe.Model;
-import javafx.application.Platform;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -72,18 +69,17 @@ class ModelTest {
 
     @Test
     @DisplayName("A disabled button is not a valid choice")
-    void cannotUseADisabledButton(){
+    void cannotUseADisabledButton() {
 
-     Button button = new Button();
+        Button button = new Button();
 
 
-
-      // public Button randomButton(ObservableList<Button> buttons) {
-      //     var randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
-      //     while (randomedButton.isDisabled()) {
-      //         randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
-      //     }
-      //     return randomedButton;
-      // }
+        // public Button randomButton(ObservableList<Button> buttons) {
+        //     var randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
+        //     while (randomedButton.isDisabled()) {
+        //         randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
+        //     }
+        //     return randomedButton;
+        // }
     }
 }

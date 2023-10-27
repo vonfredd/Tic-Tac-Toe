@@ -5,9 +5,37 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 
-public class Model {
+import java.util.Arrays;
 
-    ObservableList<Button> v5Buttons = FXCollections.observableArrayList();
+public class Model {
+    ObservableList<SimpleStringProperty> markingOfButtons = FXCollections.observableArrayList();
+    ObservableList<SimpleBooleanProperty> disabledButtons = FXCollections.observableArrayList();
+
+    public void addToMarkingOfButtons() {
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+
+    }
+
+    public void setButtonsDisable() {
+        disabledButtons.add(new SimpleBooleanProperty());
+        disabledButtons.add(new SimpleBooleanProperty());
+        disabledButtons.add(new SimpleBooleanProperty());
+        disabledButtons.add(new SimpleBooleanProperty());
+        disabledButtons.add(new SimpleBooleanProperty());
+        disabledButtons.add(new SimpleBooleanProperty());
+        disabledButtons.add(new SimpleBooleanProperty());
+        disabledButtons.add(new SimpleBooleanProperty());
+        disabledButtons.add(new SimpleBooleanProperty());
+    }
+
     private final BooleanProperty gameOver = new SimpleBooleanProperty();
     private final SimpleStringProperty theWinnerIs = new SimpleStringProperty();
     private final SimpleIntegerProperty playerTurn = new SimpleIntegerProperty();
@@ -32,12 +60,16 @@ public class Model {
             {2, 4, 6}};
     private int emptySpaces;
 
-    public ObservableList<Button> getV5Buttons() {
-        return v5Buttons;
-    }
-
     public GameState getGameState() {
         return gameState;
+    }
+
+    public ObservableList<SimpleBooleanProperty> getDisabledButtons() {
+        return disabledButtons;
+    }
+
+    public ObservableList<SimpleStringProperty> getMarkingOfButtons() {
+        return markingOfButtons;
     }
 
     public void setGameState(GameState gameState) {
@@ -109,12 +141,12 @@ public class Model {
         this.computerScore.set(computerScore);
     }
 
-    public Button randomButton(ObservableList<Button> buttons) {
-        var randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
-        while (randomedButton.isDisabled()) {
-            randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
+    public int randomButton() {
+        var randomedButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
+        while (!randomedButton.getValue().equals("")) {
+            randomedButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
         }
-        return randomedButton;
+        return markingOfButtons.indexOf(randomedButton);
     }
 
 
@@ -142,9 +174,10 @@ public class Model {
     public void resetRound() {
         setPlayerTurn(1);
         setGameOver(false);
-        setEmptySpaces(v5Buttons.size());
+        setEmptySpaces(getMarkingOfButtons().size());
         setGameState(GameState.RUNNING);
-        resetButtons();
+        markingOfButtons.stream().forEach((e) -> e.setValue(""));
+        disabledButtons.stream().forEach((e) -> e.setValue(false));
     }
 
     public void resetGame() {
@@ -153,41 +186,18 @@ public class Model {
         setComputerScore(0);
     }
 
-    public void addButtonsToV5List() {
-        Button button1 = new Button();
-        Button button2 = new Button();
-        Button button3 = new Button();
-        Button button4 = new Button();
-        Button button5 = new Button();
-        Button button6 = new Button();
-        Button button7 = new Button();
-        Button button8 = new Button();
-        Button button9 = new Button();
-
-        v5Buttons.add(button1);
-        v5Buttons.add(button2);
-        v5Buttons.add(button3);
-        v5Buttons.add(button4);
-        v5Buttons.add(button5);
-        v5Buttons.add(button6);
-        v5Buttons.add(button7);
-        v5Buttons.add(button8);
-        v5Buttons.add(button9);
-
+    public void addPlayerMarkAndDisable(int index) {
+        getMarkingOfButtons().get(index).setValue(setPlayerMark());
+        getDisabledButtons().get(index).setValue(true);
     }
 
-    public void addPlayerMarkAndDisable(Button clickedButton) {
-        clickedButton.setText(setPlayerMark());
-        clickedButton.setDisable(true);
-    }
-
-    public void gameLogicStarter(Button buttonToModify) {
-        addPlayerMarkAndDisable(buttonToModify);
+    public void gameLogicStarter(int index) {
+        addPlayerMarkAndDisable(index);
         setGameState();
 
         if (getGameState() == Model.GameState.RUNNING) {
             setNextTurn();
-            addPlayerMarkAndDisable(randomButton(getV5Buttons()));
+            addPlayerMarkAndDisable(randomButton());
             setGameState();
         }
 
@@ -210,7 +220,7 @@ public class Model {
         for (int i = 0; i < winConditions.length; i++) {
             str = new StringBuilder();
             for (int j = 0; j < winConditions[i].length; j++) {
-                str.append(getV5Buttons().get(winConditions[i][j]).getText());
+                str.append(getMarkingOfButtons().get(winConditions[i][j]).getValue());
             }
             if (str.toString().equals("XXX") || str.toString().equals("OOO"))
                 return true;
@@ -230,12 +240,5 @@ public class Model {
                 setGameOver(true);
             }
         }
-    }
-
-    private void resetButtons() {
-        getV5Buttons().stream().forEach((e) -> {
-            e.setDisable(false);
-            e.setText("");
-        });
     }
 }
