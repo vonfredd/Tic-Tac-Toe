@@ -7,11 +7,6 @@ import javafx.scene.control.Button;
 
 public class Model {
 
-    public enum GameState {
-        RUNNING,
-        WINNER,
-        NO_WINNER
-    }
     ObservableList<Button> v5Buttons = FXCollections.observableArrayList();
     private final BooleanProperty gameOver = new SimpleBooleanProperty();
     private final SimpleStringProperty theWinnerIs = new SimpleStringProperty();
@@ -19,6 +14,23 @@ public class Model {
     private final SimpleIntegerProperty playerScore = new SimpleIntegerProperty();
     private final SimpleIntegerProperty computerScore = new SimpleIntegerProperty();
     private GameState gameState;
+
+    public enum GameState {
+        RUNNING,
+        WINNER,
+        NO_WINNER;
+    }
+
+    private final int[][] winConditions = {
+            {0, 1, 2},
+            {3, 4, 5},
+            {6, 7, 8},
+            {0, 3, 6},
+            {1, 4, 7},
+            {2, 5, 8},
+            {0, 4, 8},
+            {2, 4, 6}};
+    private int emptySpaces;
 
     public ObservableList<Button> getV5Buttons() {
         return v5Buttons;
@@ -32,7 +44,6 @@ public class Model {
         this.gameState = gameState;
     }
 
-    private int emptySpaces;
 
     public void setEmptySpaces(int emptySpaces) {
         this.emptySpaces = emptySpaces;
@@ -98,16 +109,6 @@ public class Model {
         this.computerScore.set(computerScore);
     }
 
-    private final int[][] winConditions = {
-            {0, 1, 2},
-            {3, 4, 5},
-            {6, 7, 8},
-            {0, 3, 6},
-            {1, 4, 7},
-            {2, 5, 8},
-            {0, 4, 8},
-            {2, 4, 6}};
-
     public Button randomButton(ObservableList<Button> buttons) {
         var randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
         while (randomedButton.isDisabled()) {
@@ -151,7 +152,7 @@ public class Model {
         setComputerScore(0);
     }
 
-    public void addButtonsToV5List(){
+    public void addButtonsToV5List() {
         Button button1 = new Button();
         Button button2 = new Button();
         Button button3 = new Button();
@@ -178,8 +179,9 @@ public class Model {
         clickedButton.setText(setPlayerMark());
         clickedButton.setDisable(true);
     }
-    public void gameLogicStarter(Button buttonToModify) {
 
+    public void gameLogicStarter(Button buttonToModify) {
+        System.out.println("Players Turn is now" + getPlayerTurn());
         addPlayerMarkAndDisable(buttonToModify);
         setGameState();
 
