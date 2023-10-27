@@ -39,7 +39,7 @@ class ModelTest {
     @DisplayName("No winner")
     void checkIfThereIsNoWinner() {
         model.setGameState(Model.GameState.NO_WINNER);
-        model.implementGamestate(model.getGameState());
+        model.implementStateOfGame(model.getGameState());
 
         assertNotEquals("COMPUTER WINS", model.getTheWinnerIs());
         assertNotEquals("PLAYER WINS", model.getTheWinnerIs());
@@ -49,21 +49,21 @@ class ModelTest {
     @Test
     @DisplayName("check if round is over when there is no winner")
     void roundIsOverWhenThereIsNoWinner() {
-        model.implementGamestate(Model.GameState.NO_WINNER);
+        model.implementStateOfGame(Model.GameState.NO_WINNER);
         assertTrue(model.getGameOver());
     }
 
     @Test
     @DisplayName("check if round is over when there is a winner")
     void roundIsOverWhenThereIsAWinner() {
-        model.implementGamestate(Model.GameState.WINNER);
+        model.implementStateOfGame(Model.GameState.WINNER);
         assertTrue(model.getGameOver());
     }
 
     @Test
     @DisplayName("check if round is not over when game is running")
     void roundIsNotOverWhenGameIsRunning() {
-        model.implementGamestate(Model.GameState.RUNNING);
+        model.implementStateOfGame(Model.GameState.RUNNING);
         assertFalse(model.getGameOver());
     }
 

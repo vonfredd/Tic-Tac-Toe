@@ -3,9 +3,6 @@ package com.iths.tictactoe;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-
-import java.util.Arrays;
 
 public class Model {
     private final ObservableList<SimpleStringProperty> markingOfButtons = FXCollections.observableArrayList();
@@ -46,7 +43,7 @@ public class Model {
     public enum GameState {
         RUNNING,
         WINNER,
-        NO_WINNER;
+        NO_WINNER
     }
 
     private final int[][] winConditions = {
@@ -141,11 +138,11 @@ public class Model {
     }
 
     public int randomButton() {
-        var randomedButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
-        while (!randomedButton.getValue().equals("")) {
-            randomedButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
+        var randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
+        while (!randomButton.getValue().equals("")) {
+            randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
         }
-        return markingOfButtons.indexOf(randomedButton);
+        return markingOfButtons.indexOf(randomButton);
     }
 
 
@@ -175,8 +172,8 @@ public class Model {
         setGameOver(false);
         setEmptySpaces(getMarkingOfButtons().size());
         setGameState(GameState.RUNNING);
-        markingOfButtons.stream().forEach((e) -> e.setValue(""));
-        disabledButtons.stream().forEach((e) -> e.setValue(false));
+        markingOfButtons.forEach((e) -> e.setValue(""));
+        disabledButtons.forEach((e) -> e.setValue(false));
     }
 
     public void resetGame() {
@@ -200,7 +197,7 @@ public class Model {
             setGameState();
         }
 
-        implementGamestate(getGameState());
+        implementStateOfGame(getGameState());
     }
 
     public void setGameState() {
@@ -227,7 +224,7 @@ public class Model {
         return false;
     }
 
-    public void implementGamestate(GameState gameState) {
+    public void implementStateOfGame(GameState gameState) {
         switch (gameState) {
             case RUNNING -> setNextTurn();
             case WINNER -> {

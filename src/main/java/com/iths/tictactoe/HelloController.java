@@ -49,7 +49,7 @@ public class HelloController {
     public void initialize() {
         addBoardGameButtonsFromFXML();
         bindProperties();
-        buttons.stream().forEach((e) -> e.setOpacity(1));
+        buttons.forEach((e) -> e.setOpacity(1));
         model.setEmptySpaces(buttons.size());
         model.setGameState(Model.GameState.RUNNING);
         model.setPlayerTurn(1);
