@@ -117,6 +117,7 @@ public class Model {
         return randomedButton;
     }
 
+
     public void setNextTurn() {
         setPlayerTurn(getPlayerTurn() == 1 ? 0 : 1);
     }
@@ -181,7 +182,6 @@ public class Model {
     }
 
     public void gameLogicStarter(Button buttonToModify) {
-        System.out.println("Players Turn is now" + getPlayerTurn());
         addPlayerMarkAndDisable(buttonToModify);
         setGameState();
 

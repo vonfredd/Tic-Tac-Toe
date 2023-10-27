@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class GreetServer {
+public class SimpleServer {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private PrintWriter out;
@@ -35,7 +35,7 @@ public class GreetServer {
     }
 
     public static void main(String[] args) throws IOException {
-        EchoMultiServer echoServer = new EchoMultiServer();
+        LoopedServerMultipleConnections echoServer = new LoopedServerMultipleConnections();
         //GreetServer server = new GreetServer();
         echoServer.start(5555);
 

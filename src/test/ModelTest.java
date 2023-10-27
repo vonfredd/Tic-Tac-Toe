@@ -1,4 +1,8 @@
 import com.iths.tictactoe.Model;
+import javafx.application.Platform;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +22,7 @@ class ModelTest {
 
     @Test
     @DisplayName("playerWins")
-    void thePlayerWins() {
+    void PlayerWinsIfGamestateIsWinnerAndPlayerTurnIs1() {
         model.setGameState(Model.GameState.WINNER);
         model.setPlayerTurn(1);
         model.theWinnerIs(model.getPlayerTurn());
@@ -27,7 +31,7 @@ class ModelTest {
 
     @Test
     @DisplayName("computerWins")
-    void theComputerWins() {
+    void computerWinsIfGamestateIsWinnerAndPlayerTurnIs0() {
         model.setGameState(Model.GameState.WINNER);
         model.setPlayerTurn(0);
         model.theWinnerIs(model.getPlayerTurn());
@@ -35,11 +39,11 @@ class ModelTest {
     }
 
     @Test
-    @DisplayName("no-one wins")
-    void noWinner() {
+    @DisplayName("No winner")
+    void checkIfThereIsNoWinner() {
         model.setGameState(Model.GameState.NO_WINNER);
-        model.setEmptySpaces(0);
-        model.thereIsNoWinner();
+        model.implementGamestate(model.getGameState());
+
         assertNotEquals("COMPUTER WINS", model.getTheWinnerIs());
         assertNotEquals("PLAYER WINS", model.getTheWinnerIs());
         assertEquals("NO WINNER", model.getTheWinnerIs());
@@ -66,4 +70,20 @@ class ModelTest {
         assertFalse(model.getGameOver());
     }
 
+    @Test
+    @DisplayName("A disabled button is not a valid choice")
+    void cannotUseADisabledButton(){
+
+     Button button = new Button();
+
+
+
+      // public Button randomButton(ObservableList<Button> buttons) {
+      //     var randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
+      //     while (randomedButton.isDisabled()) {
+      //         randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
+      //     }
+      //     return randomedButton;
+      // }
+    }
 }

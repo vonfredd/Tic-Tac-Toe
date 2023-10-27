@@ -6,11 +6,11 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EchoMultiServerTest {
+class LoopedServerMultipleConnectionsTest {
 
     @Test
     public void givenClient1_whenServerResponds_thenCorrect() throws IOException {
-        GreetClient client1 = new GreetClient();
+        SimpleClient client1 = new SimpleClient();
         client1.startConnection("127.0.0.1", 5555);
         String msg1 = client1.sendMessage("hello");
         String msg2 = client1.sendMessage("world");
@@ -23,7 +23,7 @@ class EchoMultiServerTest {
 
     @Test
     public void givenClient2_whenServerResponds_thenCorrect() throws IOException {
-        GreetClient client2 = new GreetClient();
+        SimpleClient client2 = new SimpleClient();
         client2.startConnection("127.0.0.1", 5555);
         String msg1 = client2.sendMessage("hello");
         String msg2 = client2.sendMessage("world");

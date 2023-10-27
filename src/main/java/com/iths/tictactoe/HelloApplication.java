@@ -1,6 +1,6 @@
 package com.iths.tictactoe;
 
-import com.iths.tictactoe.server.GreetServer;
+import com.iths.tictactoe.server.SimpleServer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,7 +21,7 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) throws IOException {
         launch();
-        GreetServer server = new GreetServer();
+        SimpleServer server = new SimpleServer();
         server.start(6666);
     }
 }

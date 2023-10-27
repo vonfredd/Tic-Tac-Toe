@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class EchoMultiServer {
+public class LoopedServerMultipleConnections {
     private ServerSocket serverSocket;
 
     public void start(int port) throws IOException {
