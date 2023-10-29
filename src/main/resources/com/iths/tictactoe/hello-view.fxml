@@ -98,7 +98,8 @@
                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
             </BorderPane.margin>
          <children>
-            <Circle fill="#ff1f1f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button fx:id="connect" text="ConnectToMe" onMouseClicked="#connectUserToServer"/>
+            <Circle fx:id="oneConnected" fill="red" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
             <Label fx:id="labelOne" text="No Player Connected">
                <padding>
                   <Insets bottom="50.0" />
@@ -106,7 +107,7 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin></Label>
-            <Circle fill="#ff1f1f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="twoConnected" fill="red" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
             <Label fx:id="labelTwo" text="No Player Connected" />
          </children>
         </VBox>

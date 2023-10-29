@@ -1,6 +1,7 @@
 package com.iths.tictactoe.server;
 
-import javafx.beans.property.SimpleStringProperty;
+import com.iths.tictactoe.HelloController;
+import javafx.scene.input.MouseEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,13 +11,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class LoopedServerMultipleConnections {
+    private final HelloController helloController;
     private ServerSocket serverSocket;
+
+    public LoopedServerMultipleConnections(HelloController helloController) {
+        this.helloController = helloController;
+    }
 
 
     public void start(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         while (true)
-            new MultiClientHandler(serverSocket.accept()).start();
+            new MultiClientHandler(serverSocket.accept(), helloController).start();
     }
 
     public void stop() throws IOException {
@@ -28,15 +34,16 @@ public class LoopedServerMultipleConnections {
         private Socket clientSocket;
         private PrintWriter out;
         private BufferedReader in;
+        private HelloController helloController;
 
-        public MultiClientHandler(Socket socket) {
+        public MultiClientHandler(Socket socket, HelloController helloController) {
             this.clientSocket = socket;
-            System.out.println("player"+player+" Connected");
+            this.helloController = helloController;
+            System.out.println("player" + player + " Connected");
             player++;
         }
 
         public void run() {
-
             try {
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
             } catch (IOException e) {
@@ -48,6 +55,8 @@ public class LoopedServerMultipleConnections {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            MouseEvent event;
 
             String inputLine;
             while (true) {

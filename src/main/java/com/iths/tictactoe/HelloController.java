@@ -1,11 +1,17 @@
 package com.iths.tictactoe;
 
 import com.iths.tictactoe.server.LoopedServerMultipleConnections;
+import com.iths.tictactoe.server.PlayerClient;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +51,10 @@ public class HelloController {
 
     @FXML
     private Label labelOne;
+    @FXML
+    private Circle oneConnected = new Circle();
+    @FXML
+    private Circle twoConnected;
 
     @FXML
     private final Model model = new Model();
@@ -76,7 +86,6 @@ public class HelloController {
     private void bindProperties() {
         model.setButtonsDisable();
         model.addEmptyButtonMark();
-
         pane.disableProperty().bind(model.gameOverProperty());
         winnerName.visibleProperty().bind(model.gameOverProperty());
         winnerName.textProperty().bind(model.theWinnerIsProperty());
@@ -92,7 +101,6 @@ public class HelloController {
 
     public void pressedAButton(MouseEvent event) {
         model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
-        sendToServer();
     }
 
     public void resetRound() {
@@ -103,13 +111,22 @@ public class HelloController {
         model.resetGame();
     }
 
-    public void sendToServer() {
-        try {
-            String response = HelloApplication.client1.sendMessage("Hello, Server!");
-            // Process the response if needed
-            System.out.println(response);
-        } catch (IOException e) {
-            // Handle communication error
-        }
+
+    public void playerOneConnected() {
+        Platform.runLater(() -> {
+            oneConnected.setFill(Color.GREEN);
+        });
+    }
+
+    public void playerTwoConnected() {
+        Platform.runLater(() -> {
+            twoConnected.setFill(Color.GREEN);
+        });
+    }
+
+    public void connectUserToServer(MouseEvent event) throws IOException {
+        PlayerClient client1 = new PlayerClient();
+        client1.startConnection("localhost", 5555);
+        playerOneConnected();
     }
 }

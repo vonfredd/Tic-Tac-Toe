@@ -5,12 +5,13 @@ import com.iths.tictactoe.server.PlayerClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-
+    static HelloController helloController;
     static LoopedServerMultipleConnections server;
     static PlayerClient client1;
     static PlayerClient client2;
@@ -26,7 +27,8 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) throws IOException {
-        server = new LoopedServerMultipleConnections();
+        helloController = new HelloController();
+        server = new LoopedServerMultipleConnections(helloController);
         client1 = new PlayerClient();
         client2 = new PlayerClient();
 
@@ -39,8 +41,6 @@ public class HelloApplication extends Application {
         });
         serverThread.start();
 
-        client1.startConnection("localhost", 5555);
-        client2.startConnection("localhost", 5555);
         launch();
 
     }
