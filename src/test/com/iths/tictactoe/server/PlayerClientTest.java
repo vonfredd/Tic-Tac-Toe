@@ -6,11 +6,11 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SimpleClientTest {
+class PlayerClientTest {
 
     @Test
     public void givenGreetingClient_whenServerRespondsWhenStarted_thenCorrect() throws IOException {
-        SimpleClient client = new SimpleClient();
+        PlayerClient client = new PlayerClient();
         client.startConnection("127.0.0.1", 8888);
         String response = client.sendMessage("hello server");
         assertEquals("hello client", response);

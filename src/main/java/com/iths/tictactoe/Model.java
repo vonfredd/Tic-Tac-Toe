@@ -4,11 +4,13 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class Model {
     private final ObservableList<SimpleStringProperty> markingOfButtons = FXCollections.observableArrayList();
     private final ObservableList<SimpleBooleanProperty> disabledButtons = FXCollections.observableArrayList();
 
-    public void addToMarkingOfButtons() {
+    public void addEmptyButtonMark() {
         markingOfButtons.add(new SimpleStringProperty(""));
         markingOfButtons.add(new SimpleStringProperty(""));
         markingOfButtons.add(new SimpleStringProperty(""));
@@ -137,14 +139,6 @@ public class Model {
         this.computerScore.set(computerScore);
     }
 
-    public int randomButton() {
-        var randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
-        while (!randomButton.getValue().equals("")) {
-            randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
-        }
-        return markingOfButtons.indexOf(randomButton);
-    }
-
 
     public void setNextTurn() {
         setPlayerTurn(getPlayerTurn() == 1 ? 0 : 1);
@@ -158,6 +152,14 @@ public class Model {
         String winner = playerTurn == 1 ? "PLAYER WINS" : "COMPUTER WINS";
         setTheWinnerIs(winner);
         addToWinnerScore(playerTurn);
+    }
+
+    public int randomButton() {
+        var randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
+        while (!randomButton.getValue().equals("")) {
+            randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
+        }
+        return markingOfButtons.indexOf(randomButton);
     }
 
     public void addToWinnerScore(int playerTurn) {

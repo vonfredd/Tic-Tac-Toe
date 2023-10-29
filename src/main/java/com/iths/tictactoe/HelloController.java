@@ -1,11 +1,13 @@
 package com.iths.tictactoe;
 
+import com.iths.tictactoe.server.LoopedServerMultipleConnections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,9 @@ public class HelloController {
     private Label winnerName;
 
     @FXML
+    private Label labelOne;
+
+    @FXML
     private final Model model = new Model();
 
     private List<Button> buttons;
@@ -70,16 +75,14 @@ public class HelloController {
 
     private void bindProperties() {
         model.setButtonsDisable();
-        model.addToMarkingOfButtons();
-
-
-
+        model.addEmptyButtonMark();
 
         pane.disableProperty().bind(model.gameOverProperty());
         winnerName.visibleProperty().bind(model.gameOverProperty());
         winnerName.textProperty().bind(model.theWinnerIsProperty());
         playerScore.textProperty().bind(model.playerScoreProperty().asString());
         computerScore.textProperty().bind(model.computerScoreProperty().asString());
+
 
         for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).textProperty().bind(model.getMarkingOfButtons().get(i));
@@ -88,8 +91,8 @@ public class HelloController {
     }
 
     public void pressedAButton(MouseEvent event) {
-
         model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
+        sendToServer();
     }
 
     public void resetRound() {
@@ -98,5 +101,15 @@ public class HelloController {
 
     public void resetGame() {
         model.resetGame();
+    }
+
+    public void sendToServer() {
+        try {
+            String response = HelloApplication.client1.sendMessage("Hello, Server!");
+            // Process the response if needed
+            System.out.println(response);
+        } catch (IOException e) {
+            // Handle communication error
+        }
     }
 }

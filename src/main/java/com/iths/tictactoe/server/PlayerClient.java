@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class SimpleClient {
+public class PlayerClient {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
@@ -28,4 +28,5 @@ public class SimpleClient {
         out.close();
         clientSocket.close();
     }
+
 }

@@ -15,6 +15,7 @@ class ModelTest {
     @BeforeEach
     void setUp() throws IOException {
         model = new Model();
+        model.addEmptyButtonMark();
     }
 
     @Test
@@ -68,18 +69,20 @@ class ModelTest {
     }
 
     @Test
-    @DisplayName("A disabled button is not a valid choice")
-    void cannotUseADisabledButton() {
+    @DisplayName("A button with no player mark is ok")
+    void testRandomButton() {
+        int index = model.randomButton();
 
-        Button button = new Button();
+        assertTrue(index >= 0 && index < model.getMarkingOfButtons().size());
+        assertTrue(model.getMarkingOfButtons().get(index).getValue().isEmpty());
 
 
-        // public Button randomButton(ObservableList<Button> buttons) {
-        //     var randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
-        //     while (randomedButton.isDisabled()) {
-        //         randomedButton = buttons.get((int) (Math.random() * v5Buttons.size() - 1));
-        //     }
-        //     return randomedButton;
-        // }
+      /*  public int randomButton() {
+            var randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
+            while (!randomButton.getValue().equals("")) {
+                randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
+            }
+            return markingOfButtons.indexOf(randomButton);
+        } */
     }
 }
