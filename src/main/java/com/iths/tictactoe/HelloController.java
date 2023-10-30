@@ -115,6 +115,7 @@ public class HelloController {
     public void playerOneConnected() {
         Platform.runLater(() -> {
             oneConnected.setFill(Color.GREEN);
+            labelOne.setText("Player has connected!");
         });
     }
 
@@ -124,7 +125,7 @@ public class HelloController {
         });
     }
 
-    public void connectUserToServer(MouseEvent event) throws IOException {
+    public void connectUserToServer() throws IOException {
         PlayerClient client1 = new PlayerClient();
         client1.startConnection("localhost", 5555);
         playerOneConnected();

@@ -4,8 +4,6 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.List;
-
 public class Model {
     private final ObservableList<SimpleStringProperty> markingOfButtons = FXCollections.observableArrayList();
     private final ObservableList<SimpleBooleanProperty> disabledButtons = FXCollections.observableArrayList();
