@@ -2,7 +2,6 @@ package com.iths.tictactoe.server;
 
 import com.iths.tictactoe.HelloController;
 import com.iths.tictactoe.Model;
-import javafx.scene.input.MouseEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,12 +10,16 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class LoopedServerMultipleConnections {
+public class LoopedServerMultipleConnectionsTwo {
     private final HelloController helloController;
     private ServerSocket serverSocket;
 
+    Model model = new Model();
 
-    public LoopedServerMultipleConnections(HelloController helloController) {
+    private static int playerCount = 0;
+    private static int playerTurn = 0;
+
+    public LoopedServerMultipleConnectionsTwo(HelloController helloController) {
         this.helloController = helloController;
     }
 
@@ -40,10 +43,11 @@ public class LoopedServerMultipleConnections {
         public MultiClientHandler(Socket socket, HelloController helloController) {
             this.clientSocket = socket;
             this.helloController = helloController;
-
+            System.out.println("player" + (++playerCount) + " Connected");
         }
 
         public void run() {
+
             try {
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
             } catch (IOException e) {
@@ -57,7 +61,6 @@ public class LoopedServerMultipleConnections {
             }
 
 
-
             String inputLine;
             while (true) {
                 try {
@@ -69,7 +72,10 @@ public class LoopedServerMultipleConnections {
                     out.println("bye");
                     break;
                 }
-                out.println("i got you!");
+                if (playerTurn == 1)
+                    out.println("i got you!");
+                out.println("i got me!");
+                swapPlayerTurn();
             }
 
             try {
@@ -86,4 +92,10 @@ public class LoopedServerMultipleConnections {
         }
     }
 
+    public static void swapPlayerTurn() {
+        if (playerTurn == 0)
+            playerTurn = 1;
+        else
+            playerTurn = 0;
+    }
 }

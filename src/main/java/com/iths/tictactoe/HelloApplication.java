@@ -1,6 +1,7 @@
 package com.iths.tictactoe;
 
 import com.iths.tictactoe.server.LoopedServerMultipleConnections;
+import com.iths.tictactoe.server.LoopedServerMultipleConnectionsTwo;
 import com.iths.tictactoe.server.PlayerClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     static HelloController helloController;
-    static LoopedServerMultipleConnections server;
+    static LoopedServerMultipleConnectionsTwo server;
     static PlayerClient client1;
     static PlayerClient client2;
 
@@ -28,9 +29,7 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         helloController = new HelloController();
-        server = new LoopedServerMultipleConnections(helloController);
-        client1 = new PlayerClient();
-        client2 = new PlayerClient();
+        server = new LoopedServerMultipleConnectionsTwo(helloController);
 
         Thread serverThread = new Thread(() -> {
             try {

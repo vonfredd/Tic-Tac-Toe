@@ -75,14 +75,6 @@ class ModelTest {
 
         assertTrue(index >= 0 && index < model.getMarkingOfButtons().size());
         assertTrue(model.getMarkingOfButtons().get(index).getValue().isEmpty());
-
-
-      /*  public int randomButton() {
-            var randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
-            while (!randomButton.getValue().equals("")) {
-                randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
-            }
-            return markingOfButtons.indexOf(randomButton);
-        } */
+        
     }
 }

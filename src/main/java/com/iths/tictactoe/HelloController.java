@@ -126,8 +126,12 @@ public class HelloController {
     }
 
     public void connectUserToServer() throws IOException {
-        PlayerClient client1 = new PlayerClient();
-        client1.startConnection("localhost", 5555);
+        PlayerClient client = new PlayerClient();
+        client.startConnection("localhost", 5555);
         playerOneConnected();
+
+        String message = ".";
+        String response = client.sendMessage(message);
+        System.out.println("Server response: " + response);
     }
 }
