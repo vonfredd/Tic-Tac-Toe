@@ -1,8 +1,6 @@
 package com.iths.tictactoe.server;
 
-import com.iths.tictactoe.HelloController;
-import com.iths.tictactoe.Model;
-import javafx.scene.input.MouseEvent;
+import com.iths.tictactoe.SinglePlayerController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,19 +10,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class LoopedServerMultipleConnections {
-    private final HelloController helloController;
+    private final SinglePlayerController singlePlayerController;
     private ServerSocket serverSocket;
 
 
-    public LoopedServerMultipleConnections(HelloController helloController) {
-        this.helloController = helloController;
+    public LoopedServerMultipleConnections(SinglePlayerController singlePlayerController) {
+        this.singlePlayerController = singlePlayerController;
     }
 
 
     public void start(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         while (true)
-            new MultiClientHandler(serverSocket.accept(), helloController).start();
+            new MultiClientHandler(serverSocket.accept(), singlePlayerController).start();
     }
 
     public void stop() throws IOException {
@@ -35,11 +33,11 @@ public class LoopedServerMultipleConnections {
         private Socket clientSocket;
         private PrintWriter out;
         private BufferedReader in;
-        private HelloController helloController;
+        private SinglePlayerController singlePlayerController;
 
-        public MultiClientHandler(Socket socket, HelloController helloController) {
+        public MultiClientHandler(Socket socket, SinglePlayerController singlePlayerController) {
             this.clientSocket = socket;
-            this.helloController = helloController;
+            this.singlePlayerController = singlePlayerController;
 
         }
 

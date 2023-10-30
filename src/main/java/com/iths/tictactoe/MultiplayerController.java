@@ -1,23 +1,20 @@
 package com.iths.tictactoe;
 
-import com.iths.tictactoe.server.LoopedServerMultipleConnections;
 import com.iths.tictactoe.server.PlayerClient;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HelloController {
+public class MultiplayerController {
 
     @FXML
     private Label playerScore;

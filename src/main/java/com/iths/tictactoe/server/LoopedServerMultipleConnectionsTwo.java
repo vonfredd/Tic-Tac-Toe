@@ -1,6 +1,6 @@
 package com.iths.tictactoe.server;
 
-import com.iths.tictactoe.HelloController;
+import com.iths.tictactoe.SinglePlayerController;
 import com.iths.tictactoe.Model;
 
 import java.io.BufferedReader;
@@ -11,7 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class LoopedServerMultipleConnectionsTwo {
-    private final HelloController helloController;
+    private final SinglePlayerController singlePlayerController;
     private ServerSocket serverSocket;
 
     Model model = new Model();
@@ -19,15 +19,15 @@ public class LoopedServerMultipleConnectionsTwo {
     private static int playerCount = 0;
     private static int playerTurn = 0;
 
-    public LoopedServerMultipleConnectionsTwo(HelloController helloController) {
-        this.helloController = helloController;
+    public LoopedServerMultipleConnectionsTwo(SinglePlayerController singlePlayerController) {
+        this.singlePlayerController = singlePlayerController;
     }
 
 
     public void start(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         while (true)
-            new MultiClientHandler(serverSocket.accept(), helloController).start();
+            new MultiClientHandler(serverSocket.accept(), singlePlayerController).start();
     }
 
     public void stop() throws IOException {
@@ -38,11 +38,11 @@ public class LoopedServerMultipleConnectionsTwo {
         private Socket clientSocket;
         private PrintWriter out;
         private BufferedReader in;
-        private HelloController helloController;
+        private SinglePlayerController singlePlayerController;
 
-        public MultiClientHandler(Socket socket, HelloController helloController) {
+        public MultiClientHandler(Socket socket, SinglePlayerController singlePlayerController) {
             this.clientSocket = socket;
-            this.helloController = helloController;
+            this.singlePlayerController = singlePlayerController;
             System.out.println("player" + (++playerCount) + " Connected");
         }
 

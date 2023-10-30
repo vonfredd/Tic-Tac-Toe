@@ -1,14 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.iths.tictactoe.Multiplayer"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane style="-fx-background-color: white; " xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iths.tictactoe.MultiplayerController">
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
 
-</AnchorPane>
+    <top>
+        <BorderPane style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 10px;">
+
+            <left>
+                <VBox alignment="CENTER">
+                    <padding>
+                        <Insets left="50" />
+                    </padding>
+                    <Label fx:id="playerScore" style="-fx-font-size: 80px; -fx-text-fill: red;" text="0">
+                        <VBox.margin>
+                            <Insets bottom="-30.0" />
+                        </VBox.margin>
+                    </Label>
+                    <Label fx:id="player" style="-fx-font-size: 20px; -fx-text-fill: red;" text="Player">
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </Label>
+                </VBox>
+            </left>
+
+            <center>
+                <VBox alignment="CENTER">
+                    <Label style="-fx-font-size: 50px; " text="TicTacToe" />
+                    <Label fx:id="winnerName" style="-fx-font-size: 50px; -fx-text-fill: red;" visible="false" />
+                </VBox>
+            </center>
+
+            <right>
+                <VBox alignment="CENTER">
+                    <padding>
+                        <Insets right="50" />
+                    </padding>
+                    <Label fx:id="computerScore" style="-fx-font-size: 80px; -fx-text-fill: red;" text="0">
+                        <VBox.margin>
+                            <Insets bottom="-30.0" />
+                        </VBox.margin>
+                    </Label>
+                    <Label fx:id="computer" style="-fx-font-size: 20px; -fx-text-fill: red;" text="Computer" />
+                </VBox>
+            </right>
+            <BorderPane.margin>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </BorderPane.margin>
+        </BorderPane>
+    </top>
+
+    <bottom>
+
+    </bottom>
+
+    <center>
+        <TilePane fx:id="pane" maxHeight="322" maxWidth="362" minHeight="322" minWidth="362" style="-fx-background-color: Black; -fx-alignment: center; -fx-hgap: 5px; -fx-vgap: 5px; -fx-background-radius: 10;">
+            <Button fx:id="b1" maxHeight="100" maxWidth="113" minHeight="100" minWidth="113" onMouseClicked="#pressedAButton" style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;" />
+            <Button fx:id="b2" maxHeight="100" maxWidth="113" minHeight="100" minWidth="113" onMouseClicked="#pressedAButton" style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;" />
+            <Button fx:id="b3" maxHeight="100" maxWidth="113" minHeight="100" minWidth="113" onMouseClicked="#pressedAButton" style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;" />
+            <Button fx:id="b4" maxHeight="100" maxWidth="113" minHeight="100" minWidth="113" onMouseClicked="#pressedAButton" style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;" />
+            <Button fx:id="b5" maxHeight="100" maxWidth="113" minHeight="100" minWidth="113" onMouseClicked="#pressedAButton" style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;" />
+            <Button fx:id="b6" maxHeight="100" maxWidth="113" minHeight="100" minWidth="113" onMouseClicked="#pressedAButton" style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;" />
+            <Button fx:id="b7" maxHeight="100" maxWidth="113" minHeight="100" minWidth="113" onMouseClicked="#pressedAButton" style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;" />
+            <Button fx:id="b8" maxHeight="100" maxWidth="113" minHeight="100" minWidth="113" onMouseClicked="#pressedAButton" style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;" />
+            <Button fx:id="b9" maxHeight="100" maxWidth="113" minHeight="100" minWidth="113" onMouseClicked="#pressedAButton" style="-fx-font-size: 40; -fx-background-color: white; -fx-background-radius: 5;" />
+            <BorderPane.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </BorderPane.margin>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </TilePane>
+
+    </center>
+
+    <left>
+        <VBox alignment="CENTER" minWidth="150" spacing="50" style="-fx-background-color: pink; -fx-background-radius: 10;">
+            <Button fx:id="resetRoundButton" focusTraversable="false" minHeight="100" minWidth="100" onMouseClicked="#resetRound" text="RESET ROUND!" />
+            <Button fx:id="resetButton" focusTraversable="false" minHeight="100" minWidth="100" onMouseClicked="#resetGame" text="RESET GAME!" />
+            <BorderPane.margin>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </BorderPane.margin>
+        </VBox>
+    </left>
+
+    <right>
+        <VBox alignment="CENTER" minWidth="150" style="-fx-background-color: pink; -fx-background-radius: 10;">
+            <BorderPane.margin>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </BorderPane.margin>
+         <children>
+            <Button fx:id="connect" text="ConnectToMe" onMouseClicked="#connectUserToServer"/>
+            <Circle fx:id="oneConnected" fill="red" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label fx:id="labelOne" text="No Player Connected">
+               <padding>
+                  <Insets bottom="50.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Label>
+            <Circle fx:id="twoConnected" fill="red" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label fx:id="labelTwo" text="No Player Connected" />
+         </children>
+        </VBox>
+    </right>
+</BorderPane>

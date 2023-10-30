@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<BorderPane style="-fx-background-color: white; " xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iths.tictactoe.HelloController">
+<BorderPane style="-fx-background-color: white; " xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iths.tictactoe.SinglePlayerController">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
@@ -94,22 +94,6 @@
 
     <right>
         <VBox alignment="CENTER" minWidth="150" style="-fx-background-color: pink; -fx-background-radius: 10;">
-            <BorderPane.margin>
-                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-            </BorderPane.margin>
-         <children>
-            <Button fx:id="connect" text="ConnectToMe" onMouseClicked="#connectUserToServer"/>
-            <Circle fx:id="oneConnected" fill="red" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-            <Label fx:id="labelOne" text="No Player Connected">
-               <padding>
-                  <Insets bottom="50.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></Label>
-            <Circle fx:id="twoConnected" fill="red" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-            <Label fx:id="labelTwo" text="No Player Connected" />
-         </children>
         </VBox>
     </right>
 </BorderPane>

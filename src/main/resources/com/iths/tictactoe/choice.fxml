@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane  fx:controller="com.iths.tictactoe.ChoiceController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="multiplayer" onMouseClicked="#multiPlayer" focusTraversable="false" alignment="TOP_CENTER" layoutX="164.0" layoutY="337.0" mnemonicParsing="false" text="MULTIPLAYER">
+         <font>
+            <Font name="Impact" size="72.0" />
+         </font>
+      </Button>
+      <Button fx:id="vsComputer" onMouseClicked="#playerVsComputer" focusTraversable="false" alignment="BOTTOM_CENTER" layoutX="100.0" layoutY="146.0" mnemonicParsing="false" text="PLAYER VS COMPUTER">
+         <font>
+            <Font name="Impact" size="61.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

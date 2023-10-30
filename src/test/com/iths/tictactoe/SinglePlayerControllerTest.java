@@ -3,12 +3,12 @@ package com.iths.tictactoe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class HelloControllerTest {
-    HelloController helloController;
+class SinglePlayerControllerTest {
+    SinglePlayerController singlePlayerController;
 
     @BeforeEach
     void setUp() {
-        helloController = new HelloController();
+        singlePlayerController = new SinglePlayerController();
     }
 
     @Test
