@@ -11,10 +11,6 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     static ChoiceController choiceController;
-    static SinglePlayerController singlePlayerController;
-    static LoopedServerMultipleConnectionsTwo server;
-    static PlayerClient client1;
-    static PlayerClient client2;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -29,18 +25,6 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        singlePlayerController = new SinglePlayerController();
-        server = new LoopedServerMultipleConnectionsTwo(singlePlayerController);
-
-        Thread serverThread = new Thread(() -> {
-            try {
-                server.start(5555);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        serverThread.start();
-
         launch();
 
     }

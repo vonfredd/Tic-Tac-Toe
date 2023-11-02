@@ -54,17 +54,33 @@ public class MultiplayerController {
     private Circle twoConnected;
 
     @FXML
-    private final Model model = new Model();
+    private final MultiplayerModel model = new MultiplayerModel();
+
+    private static PlayerClient playerClient;
 
     private List<Button> buttons;
+    private volatile boolean stopListening = false;
+
+    public static void setPlayerClient(PlayerClient player) {
+        playerClient = player;
+    }
+
+    private static int playerTurn;
+
+    public static void setPlayerTurn(int playerT) {
+        playerTurn = playerT;
+    }
 
     public void initialize() {
         addBoardGameButtonsFromFXML();
         bindProperties();
         buttons.forEach((e) -> e.setOpacity(1));
         model.setEmptySpaces(buttons.size());
-        model.setGameState(Model.GameState.RUNNING);
-        model.setPlayerTurn(1);
+        model.setGameState(MultiplayerModel.GameState.RUNNING);
+
+        Thread responseListenerThread = new Thread(this::listenForResponses);
+        responseListenerThread.setDaemon(true); // Make the thread a daemon so it doesn't prevent the application from exiting
+        responseListenerThread.start();
     }
 
     private void addBoardGameButtonsFromFXML() {
@@ -98,6 +114,8 @@ public class MultiplayerController {
 
     public void pressedAButton(MouseEvent event) {
         model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
+
+        Platform.runLater(() -> sendMoveToServer(String.valueOf(buttons.indexOf((Button) event.getSource()))));
     }
 
     public void resetRound() {
@@ -122,13 +140,41 @@ public class MultiplayerController {
         });
     }
 
-    public void connectUserToServer() throws IOException {
-        PlayerClient client = new PlayerClient();
-        client.startConnection("localhost", 5555);
-        playerOneConnected();
+    public void sendMoveToServer(String moveMessage) {
+        Thread sendMoveThread = new Thread(() -> {
+            try {
+                int a = Integer.parseInt(playerClient.sendMessage(moveMessage));
+                System.out.println("Sent to server , INDEX " + a);
+            } catch (IOException e) {
+                System.out.println("Error in sendMoveToServer");
+            }
+        });
+        sendMoveThread.setDaemon(false);
+        sendMoveThread.start();
+    }
 
-        String message = ".";
-        String response = client.sendMessage(message);
-        System.out.println("Server response: " + response);
+    private void listenForResponses() {
+        while (!stopListening) {
+            try {
+                String response = playerClient.receiveMessage();
+                System.out.println("Detta är då svaret jag fgick!" + response);
+                Platform.runLater(() -> handleReceivedResponse(response));
+            } catch (IOException e) {
+                System.out.println("Error in listenForResponses");
+            }
+        }
+    }
+
+    private void handleReceivedResponse(String response) {
+        System.out.println("Received response: " + response);
+        model.gameLogicStarter(Integer.parseInt(response));
+    }
+
+    public void stopListening() {
+        stopListening = true;
     }
 }
+
+//varannan gång funkar sendMoveToServer
+//varannan gång tar emot
+

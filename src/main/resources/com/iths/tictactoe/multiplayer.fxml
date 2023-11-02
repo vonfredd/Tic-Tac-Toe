@@ -98,7 +98,7 @@
                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
             </BorderPane.margin>
          <children>
-            <Button fx:id="connect" text="ConnectToMe" onMouseClicked="#connectUserToServer"/>
+
             <Circle fx:id="oneConnected" fill="red" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
             <Label fx:id="labelOne" text="No Player Connected">
                <padding>

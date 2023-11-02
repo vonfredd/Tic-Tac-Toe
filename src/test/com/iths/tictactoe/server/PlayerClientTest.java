@@ -11,8 +11,8 @@ class PlayerClientTest {
     @Test
     public void givenGreetingClient_whenServerRespondsWhenStarted_thenCorrect() throws IOException {
         PlayerClient client = new PlayerClient();
-        client.startConnection("127.0.0.1", 8888);
+        client.startConnection("127.0.0.1", 5555);
         String response = client.sendMessage("hello server");
-        assertEquals("hello client", response);
+        assertEquals("hello server", response);
     }
 }

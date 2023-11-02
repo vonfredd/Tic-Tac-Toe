@@ -29,4 +29,7 @@ public class PlayerClient {
         clientSocket.close();
     }
 
+    public String receiveMessage() throws IOException {
+        return in.readLine();
+    }
 }
