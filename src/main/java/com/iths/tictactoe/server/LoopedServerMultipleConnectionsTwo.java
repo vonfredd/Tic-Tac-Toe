@@ -33,6 +33,8 @@ public class LoopedServerMultipleConnectionsTwo {
 
         private static List<MultiClientHandler> connectedPlayers = new ArrayList<>();
 
+        private static final Object playerTurnLock = new Object();
+
         private Socket clientSocket;
         private PrintWriter out;
         private BufferedReader in;
@@ -42,7 +44,7 @@ public class LoopedServerMultipleConnectionsTwo {
             synchronized (connectedPlayers) {
                 connectedPlayers.add(this);
             }
-            System.out.println("player" + (++playerCount) + " Connected");
+            System.out.println("Player" + (++playerCount) + " Connected");
         }
 
         public void run() {
@@ -61,7 +63,6 @@ public class LoopedServerMultipleConnectionsTwo {
 
             String inputLine;
             while (true) {
-                System.out.println(connectedPlayers);
                 try {
                     if ((inputLine = in.readLine()) == null) break;
                 } catch (IOException e) {
@@ -71,10 +72,11 @@ public class LoopedServerMultipleConnectionsTwo {
                     out.println("bye");
                     break;
                 }
-                if(playerTurn == 0)
+                if (playerTurn == 0)
                     connectedPlayers.get(1).out.println(inputLine);
                 else
                     connectedPlayers.get(0).out.println(inputLine);
+
                 swapPlayerTurn();
             }
 
@@ -91,20 +93,24 @@ public class LoopedServerMultipleConnectionsTwo {
             }
         }
 
+
         private void sendMessageToAll(String message) {
             for (MultiClientHandler player : connectedPlayers) {
                 player.sendMessage(message);
             }
         }
+
         private void sendMessage(String message) {
             out.println(message);
         }
+
+        public static void swapPlayerTurn() {
+            if (playerTurn == 0)
+                playerTurn = 1;
+            else
+                playerTurn = 0;
+        }
+
     }
 
-    public static synchronized void swapPlayerTurn() {
-        if (playerTurn == 0)
-            playerTurn = 1;
-        else
-            playerTurn = 0;
-    }
 }

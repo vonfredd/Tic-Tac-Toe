@@ -13,6 +13,7 @@ import javafx.scene.shape.Circle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class MultiplayerController {
 
@@ -71,6 +72,7 @@ public class MultiplayerController {
         playerTurn = playerT;
     }
 
+
     public void initialize() {
         addBoardGameButtonsFromFXML();
         bindProperties();
@@ -113,9 +115,10 @@ public class MultiplayerController {
     }
 
     public void pressedAButton(MouseEvent event) {
-        model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
-
-        Platform.runLater(() -> sendMoveToServer(String.valueOf(buttons.indexOf((Button) event.getSource()))));
+        synchronized (this) {
+            model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
+            sendMoveToServer(String.valueOf(buttons.indexOf((Button) event.getSource())));
+        }
     }
 
     public void resetRound() {
@@ -143,7 +146,7 @@ public class MultiplayerController {
     public void sendMoveToServer(String moveMessage) {
         Thread sendMoveThread = new Thread(() -> {
             try {
-                int a = Integer.parseInt(playerClient.sendMessage(moveMessage));
+                String a = playerClient.sendMessage(moveMessage);
                 System.out.println("Sent to server , INDEX " + a);
             } catch (IOException e) {
                 System.out.println("Error in sendMoveToServer");
@@ -156,9 +159,10 @@ public class MultiplayerController {
     private void listenForResponses() {
         while (!stopListening) {
             try {
+                System.out.println("I am now calling from listenForResponses");
                 String response = playerClient.receiveMessage();
-                System.out.println("Detta är då svaret jag fgick!" + response);
                 Platform.runLater(() -> handleReceivedResponse(response));
+
             } catch (IOException e) {
                 System.out.println("Error in listenForResponses");
             }
@@ -166,7 +170,7 @@ public class MultiplayerController {
     }
 
     private void handleReceivedResponse(String response) {
-        System.out.println("Received response: " + response);
+        System.out.println("I am now calling from handleReceivedResponse");
         model.gameLogicStarter(Integer.parseInt(response));
     }
 
@@ -178,3 +182,8 @@ public class MultiplayerController {
 //varannan gång funkar sendMoveToServer
 //varannan gång tar emot
 
+
+/*
+public void sendMoveToServer(String moveMessage)
+this method accidentaly gets the other servers index to its string, why? Its like the other clients thread became this instances thread
+ */

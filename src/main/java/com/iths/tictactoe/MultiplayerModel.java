@@ -1,5 +1,6 @@
 package com.iths.tictactoe;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -196,7 +197,6 @@ public class MultiplayerModel {
 
         implementStateOfGame(getGameState());
     }
-
 
     public void setGameState() {
         setEmptySpaces(getEmptySpaces() - 1);
