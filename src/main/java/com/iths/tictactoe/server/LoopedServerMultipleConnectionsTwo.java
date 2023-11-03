@@ -60,6 +60,12 @@ public class LoopedServerMultipleConnectionsTwo {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            if (playerCount == 1)
+                connectedPlayers.forEach((e) -> e.out.println("oneConnect"));
+            else if (playerCount == 2) {
+                connectedPlayers.forEach((e) -> e.out.println("oneConnect"));
+                connectedPlayers.forEach((e) -> e.out.println("twoConnect"));
+            }
 
             String inputLine;
             while (true) {
@@ -68,10 +74,14 @@ public class LoopedServerMultipleConnectionsTwo {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
                 if (".".equals(inputLine)) {
                     out.println("bye");
                     break;
                 }
+                if (inputLine.equals("resetGame"))
+                    connectedPlayers.forEach((e) -> e.out.println("resetGame"));
+
                 if (playerTurn == 0)
                     connectedPlayers.get(1).out.println(inputLine);
                 else
@@ -91,17 +101,6 @@ public class LoopedServerMultipleConnectionsTwo {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
-
-
-        private void sendMessageToAll(String message) {
-            for (MultiClientHandler player : connectedPlayers) {
-                player.sendMessage(message);
-            }
-        }
-
-        private void sendMessage(String message) {
-            out.println(message);
         }
 
         public static void swapPlayerTurn() {

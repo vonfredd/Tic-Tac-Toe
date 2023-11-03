@@ -23,7 +23,7 @@
                             <Insets bottom="-30.0" />
                         </VBox.margin>
                     </Label>
-                    <Label fx:id="player" style="-fx-font-size: 20px; -fx-text-fill: red;" text="Player">
+                    <Label fx:id="player" style="-fx-font-size: 20px; -fx-text-fill: red;" text="You">
                         <VBox.margin>
                             <Insets />
                         </VBox.margin>
@@ -48,7 +48,7 @@
                             <Insets bottom="-30.0" />
                         </VBox.margin>
                     </Label>
-                    <Label fx:id="computer" style="-fx-font-size: 20px; -fx-text-fill: red;" text="Computer" />
+                    <Label fx:id="computer" style="-fx-font-size: 20px; -fx-text-fill: red;" text="Player 2" />
                 </VBox>
             </right>
             <BorderPane.margin>

@@ -95,10 +95,6 @@ public class MultiplayerModel {
         return emptySpaces;
     }
 
-    public boolean getGameOver() {
-        return gameOver.get();
-    }
-
     public BooleanProperty gameOverProperty() {
         return gameOver;
     }

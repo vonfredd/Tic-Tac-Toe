@@ -49,6 +49,8 @@ public class MultiplayerController {
     @FXML
     private Label labelOne;
     @FXML
+    private Label labelTwo;
+    @FXML
     private Circle oneConnected = new Circle();
     @FXML
     private Circle twoConnected;
@@ -72,7 +74,7 @@ public class MultiplayerController {
 
     public void initialize() throws IOException {
         thisPlayerClient = new PlayerClient();
-        thisPlayerClient.startConnection("localhost",5555);
+        thisPlayerClient.startConnection("localhost", 5555);
         addBoardGameButtonsFromFXML();
         bindProperties();
         buttons.forEach((e) -> e.setOpacity(1));
@@ -115,9 +117,9 @@ public class MultiplayerController {
     }
 
     public void pressedAButton(MouseEvent event) {
-            model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
+        model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
 
-            sendMoveToServer(String.valueOf(buttons.indexOf((Button) event.getSource())));
+        sendMoveToServer(String.valueOf(buttons.indexOf((Button) event.getSource())));
 
     }
 
@@ -126,6 +128,7 @@ public class MultiplayerController {
     }
 
     public void resetGame() {
+        sendMoveToServer("resetGame");
         model.resetGame();
     }
 
@@ -140,6 +143,7 @@ public class MultiplayerController {
     public void playerTwoConnected() {
         Platform.runLater(() -> {
             twoConnected.setFill(Color.GREEN);
+            labelTwo.setText("Player has connected!");
         });
     }
 
@@ -167,6 +171,18 @@ public class MultiplayerController {
     }
 
     private void handleReceivedResponse(String response) {
+        if (response.equals("oneConnect")) {
+            playerOneConnected();
+            return;
+        } else if (response.equals("twoConnect")) {
+            playerTwoConnected();
+            return;
+        }
+
+        if (response.equals("resetGame")) {
+            model.resetGame();
+            return;
+        }
         model.gameLogicStarter(Integer.parseInt(response));
     }
 
