@@ -21,8 +21,9 @@ public class LoopedServerMultipleConnectionsTwo {
 
     public void start(int port) throws IOException {
         serverSocket = new ServerSocket(port);
-        while (true)
+        while (playerCount < 2)
             new MultiClientHandler(serverSocket.accept()).start();
+        serverSocket.close();
     }
 
     public void stop() throws IOException {
@@ -65,6 +66,7 @@ public class LoopedServerMultipleConnectionsTwo {
             else if (playerCount == 2) {
                 connectedPlayers.forEach((e) -> e.out.println("oneConnect"));
                 connectedPlayers.forEach((e) -> e.out.println("twoConnect"));
+                connectedPlayers.forEach((e) -> e.out.println("playerOne"));
             }
 
             String inputLine;
@@ -79,15 +81,21 @@ public class LoopedServerMultipleConnectionsTwo {
                     out.println("bye");
                     break;
                 }
+
                 if (inputLine.equals("resetGame"))
                     connectedPlayers.forEach((e) -> e.out.println("resetGame"));
 
-                if (playerTurn == 0)
-                    connectedPlayers.get(1).out.println(inputLine);
-                else
-                    connectedPlayers.get(0).out.println(inputLine);
+                if (inputLine.equals("resetRound"))
+                    connectedPlayers.forEach((e) -> e.out.println("resetRound"));
 
-                swapPlayerTurn();
+                if (playerTurn == 0) {
+                    connectedPlayers.get(1).out.println(inputLine);
+                    connectedPlayers.forEach((e) -> e.out.println("playerTwo"));
+                } else {
+                    connectedPlayers.get(0).out.println(inputLine);
+                    connectedPlayers.forEach((e) -> e.out.println("playerOne"));
+                }
+                    swapPlayerTurn();
             }
 
             try {

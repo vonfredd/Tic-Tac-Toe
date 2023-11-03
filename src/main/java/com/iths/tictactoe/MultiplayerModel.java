@@ -119,10 +119,6 @@ public class MultiplayerModel {
         this.theWinnerIs.set(theWinnerIs);
     }
 
-    public String getTheWinnerIs() {
-        return theWinnerIs.get();
-    }
-
     public Integer getPlayerScore() {
         return playerScore.get();
     }
@@ -161,15 +157,6 @@ public class MultiplayerModel {
         setTheWinnerIs(winner);
         addToWinnerScore(playerTurn);
     }
-
-    public int randomButton() {
-        var randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
-        while (!randomButton.getValue().equals("")) {
-            randomButton = markingOfButtons.get((int) (Math.random() * markingOfButtons.size() - 1));
-        }
-        return markingOfButtons.indexOf(randomButton);
-    }
-
     public void addToWinnerScore(int playerTurn) {
         if (playerTurn == getMyTurn()) {
             setPlayerScore(getPlayerScore() + 1);
@@ -178,7 +165,7 @@ public class MultiplayerModel {
     }
 
     public void resetRound() {
-        setPlayerTurn(1);
+        setPlayerTurn(0);
         setGameOver(false);
         setEmptySpaces(getMarkingOfButtons().size());
         setGameState(GameState.RUNNING);

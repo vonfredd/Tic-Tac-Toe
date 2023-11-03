@@ -8,6 +8,24 @@ public class Model {
     private final ObservableList<SimpleStringProperty> markingOfButtons = FXCollections.observableArrayList();
     private final ObservableList<SimpleBooleanProperty> disabledButtons = FXCollections.observableArrayList();
 
+
+    //Model constructor with parameter is ONLY FOR TESTING
+    Model(ObservableList<SimpleStringProperty> listed){
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+        markingOfButtons.add(new SimpleStringProperty(""));
+    }
+
+    public Model(){
+
+    }
+
     public void addEmptyButtonMark() {
         markingOfButtons.add(new SimpleStringProperty(""));
         markingOfButtons.add(new SimpleStringProperty(""));
@@ -18,8 +36,8 @@ public class Model {
         markingOfButtons.add(new SimpleStringProperty(""));
         markingOfButtons.add(new SimpleStringProperty(""));
         markingOfButtons.add(new SimpleStringProperty(""));
-
     }
+
 
     public void setButtonsDisable() {
         disabledButtons.add(new SimpleBooleanProperty());

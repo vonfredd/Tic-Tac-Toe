@@ -2,6 +2,7 @@ package com.iths.tictactoe;
 
 import com.iths.tictactoe.server.PlayerClient;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -54,6 +55,9 @@ public class MultiplayerController {
     private Circle oneConnected = new Circle();
     @FXML
     private Circle twoConnected;
+
+    @FXML
+    private Label labelTurn;
 
     @FXML
     private final MultiplayerModel model = new MultiplayerModel();
@@ -109,10 +113,9 @@ public class MultiplayerController {
         playerScore.textProperty().bind(model.playerScoreProperty().asString());
         computerScore.textProperty().bind(model.computerScoreProperty().asString());
 
-
         for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).textProperty().bind(model.getMarkingOfButtons().get(i));
-            buttons.get(i).disableProperty().bind(model.getDisabledButtons().get(i));
+            buttons.get(i).disableProperty().bind(Bindings.isNotEmpty(model.getMarkingOfButtons().get(i)));
         }
     }
 
@@ -124,6 +127,7 @@ public class MultiplayerController {
     }
 
     public void resetRound() {
+        sendMoveToServer("resetRound");
         model.resetRound();
     }
 
@@ -176,6 +180,20 @@ public class MultiplayerController {
             return;
         } else if (response.equals("twoConnect")) {
             playerTwoConnected();
+            return;
+        }
+
+        if (response.equals("playerOne")) {
+            labelTurn.setText(playerTurn == 0 ? "Your turn" : "Not your turn");
+            return;
+        }
+        if (response.equals("playerTwo")) {
+            labelTurn.setText(playerTurn == 1 ? "Your turn" : "Not your turn");
+            return;
+        }
+
+        if (response.equals("resetRound")) {
+            model.resetRound();
             return;
         }
 

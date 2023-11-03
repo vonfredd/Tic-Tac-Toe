@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane style="-fx-background-color: white; " xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iths.tictactoe.MultiplayerController">
     <padding>
@@ -98,6 +99,11 @@
                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
             </BorderPane.margin>
          <children>
+            <Label fx:id="labelTurn" contentDisplay="CENTER" text="Your Turn">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
 
             <Circle fx:id="oneConnected" fill="red" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
             <Label fx:id="labelOne" text="No Player Connected">

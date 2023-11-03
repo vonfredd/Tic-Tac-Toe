@@ -77,4 +77,7 @@ class ModelTest {
         assertTrue(model.getMarkingOfButtons().get(index).getValue().isEmpty());
         
     }
+
+    //todo: test för model constructor, lägga till random markings och testa weHaveAWinner
+
 }
