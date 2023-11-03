@@ -60,19 +60,14 @@ public class ChoiceController {
         });
         serverThread.start();
 
-        player.startConnection("localhost",5555);
-
         MultiplayerController.setPlayerTurn(0);
-        MultiplayerController.setPlayerClient(player);
         multiPlayer();
 
     }
 
     public void joinGame() throws IOException {
-        player.startConnection("127.0.0.1", 5555);
 
         MultiplayerController.setPlayerTurn(1);
-        MultiplayerController.setPlayerClient(player);
         multiPlayer();
     }
 }

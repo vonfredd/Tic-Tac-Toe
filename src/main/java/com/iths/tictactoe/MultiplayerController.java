@@ -67,13 +67,16 @@ public class MultiplayerController {
     }
 
     private static int playerTurn;
+    private PlayerClient thisPlayerClient;
 
     public static void setPlayerTurn(int playerT) {
         playerTurn = playerT;
     }
 
 
-    public void initialize() {
+    public void initialize() throws IOException {
+        thisPlayerClient = new PlayerClient();
+        thisPlayerClient.startConnection("localhost",5555);
         addBoardGameButtonsFromFXML();
         bindProperties();
         buttons.forEach((e) -> e.setOpacity(1));
@@ -115,10 +118,10 @@ public class MultiplayerController {
     }
 
     public void pressedAButton(MouseEvent event) {
-        synchronized (this) {
             model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
+
             sendMoveToServer(String.valueOf(buttons.indexOf((Button) event.getSource())));
-        }
+
     }
 
     public void resetRound() {
@@ -146,8 +149,8 @@ public class MultiplayerController {
     public void sendMoveToServer(String moveMessage) {
         Thread sendMoveThread = new Thread(() -> {
             try {
-                String a = playerClient.sendMessage(moveMessage);
-                System.out.println("Sent to server , INDEX " + a);
+                thisPlayerClient.sendMessage(moveMessage);
+
             } catch (IOException e) {
                 System.out.println("Error in sendMoveToServer");
             }
@@ -160,7 +163,7 @@ public class MultiplayerController {
         while (!stopListening) {
             try {
                 System.out.println("I am now calling from listenForResponses");
-                String response = playerClient.receiveMessage();
+                String response = thisPlayerClient.receiveMessage();
                 Platform.runLater(() -> handleReceivedResponse(response));
 
             } catch (IOException e) {

@@ -17,10 +17,8 @@ public class PlayerClient {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
 
-    public String sendMessage(String msg) throws IOException{
+    public void sendMessage(String msg) throws IOException{
         out.println(msg);
-        String resp = in.readLine();
-        return resp;
     }
 
     public void stopConnection() throws IOException{
