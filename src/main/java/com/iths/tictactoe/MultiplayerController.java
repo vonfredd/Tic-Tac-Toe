@@ -185,12 +185,3 @@ public class MultiplayerController {
         stopListening = true;
     }
 }
-
-//varannan gång funkar sendMoveToServer
-//varannan gång tar emot
-
-
-/*
-public void sendMoveToServer(String moveMessage)
-this method accidentaly gets the other servers index to its string, why? Its like the other clients thread became this instances thread
- */
