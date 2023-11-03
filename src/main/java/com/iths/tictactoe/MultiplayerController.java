@@ -13,7 +13,6 @@ import javafx.scene.shape.Circle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 public class MultiplayerController {
 
@@ -57,14 +56,8 @@ public class MultiplayerController {
     @FXML
     private final MultiplayerModel model = new MultiplayerModel();
 
-    private static PlayerClient playerClient;
-
     private List<Button> buttons;
     private volatile boolean stopListening = false;
-
-    public static void setPlayerClient(PlayerClient player) {
-        playerClient = player;
-    }
 
     private static int playerTurn;
     private PlayerClient thisPlayerClient;
@@ -88,7 +81,7 @@ public class MultiplayerController {
         model.setMyTurn(getPlayerTurn());
 
         Thread responseListenerThread = new Thread(this::listenForResponses);
-        responseListenerThread.setDaemon(true); // Make the thread a daemon so it doesn't prevent the application from exiting
+        responseListenerThread.setDaemon(true);
         responseListenerThread.start();
     }
 
@@ -154,7 +147,6 @@ public class MultiplayerController {
         Thread sendMoveThread = new Thread(() -> {
             try {
                 thisPlayerClient.sendMessage(moveMessage);
-
             } catch (IOException e) {
                 System.out.println("Error in sendMoveToServer");
             }
@@ -168,7 +160,6 @@ public class MultiplayerController {
             try {
                 String response = thisPlayerClient.receiveMessage();
                 Platform.runLater(() -> handleReceivedResponse(response));
-
             } catch (IOException e) {
                 System.out.println("Error in listenForResponses");
             }
