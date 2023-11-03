@@ -44,6 +44,16 @@ public class MultiplayerModel {
     private final SimpleIntegerProperty computerScore = new SimpleIntegerProperty();
     private GameState gameState;
 
+    private int myTurn;
+
+    public int getMyTurn() {
+        return myTurn;
+    }
+
+    public void setMyTurn(int myTurn) {
+        this.myTurn = myTurn;
+    }
+
     public enum GameState {
         RUNNING,
         WINNER,
@@ -151,7 +161,7 @@ public class MultiplayerModel {
     }
 
     public void theWinnerIs(int playerTurn) {
-        String winner = playerTurn == 1 ? "PLAYER WINS" : "COMPUTER WINS";
+        String winner = playerTurn == getMyTurn() ? "YOU WIN" : "YOU LOSE";
         setTheWinnerIs(winner);
         addToWinnerScore(playerTurn);
     }
@@ -165,7 +175,7 @@ public class MultiplayerModel {
     }
 
     public void addToWinnerScore(int playerTurn) {
-        if (playerTurn == 1) {
+        if (playerTurn == getMyTurn()) {
             setPlayerScore(getPlayerScore() + 1);
         } else
             setComputerScore(getComputerScore() + 1);

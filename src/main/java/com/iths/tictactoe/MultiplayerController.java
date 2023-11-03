@@ -73,6 +73,9 @@ public class MultiplayerController {
         playerTurn = playerT;
     }
 
+    public static int getPlayerTurn() {
+        return playerTurn;
+    }
 
     public void initialize() throws IOException {
         thisPlayerClient = new PlayerClient();
@@ -82,6 +85,7 @@ public class MultiplayerController {
         buttons.forEach((e) -> e.setOpacity(1));
         model.setEmptySpaces(buttons.size());
         model.setGameState(MultiplayerModel.GameState.RUNNING);
+        model.setMyTurn(getPlayerTurn());
 
         Thread responseListenerThread = new Thread(this::listenForResponses);
         responseListenerThread.setDaemon(true); // Make the thread a daemon so it doesn't prevent the application from exiting
