@@ -166,7 +166,6 @@ public class MultiplayerController {
     private void listenForResponses() {
         while (!stopListening) {
             try {
-                System.out.println("I am now calling from listenForResponses");
                 String response = thisPlayerClient.receiveMessage();
                 Platform.runLater(() -> handleReceivedResponse(response));
 
@@ -177,7 +176,6 @@ public class MultiplayerController {
     }
 
     private void handleReceivedResponse(String response) {
-        System.out.println("I am now calling from handleReceivedResponse");
         model.gameLogicStarter(Integer.parseInt(response));
     }
 
