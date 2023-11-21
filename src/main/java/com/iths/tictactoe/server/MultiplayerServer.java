@@ -75,11 +75,6 @@ public class MultiplayerServer {
                     throw new RuntimeException(e);
                 }
 
-                if (".".equals(inputLine)) {
-                    out.println("bye");
-                    break;
-                }
-
                 if (inputLine.equals("resetGame"))
                     connectedPlayers.forEach((e) -> e.out.println("resetGame"));
 
