@@ -61,12 +61,13 @@ public class MenuController {
         serverThread.start();
 
         MultiplayerController.setPlayerTurn(0);
+        MultiplayerController.notMyTurn = false;
         multiPlayer();
 
     }
 
     public void joinGame() throws IOException {
-
+        MultiplayerController.notMyTurn = true;
         MultiplayerController.setPlayerTurn(1);
         multiPlayer();
     }

@@ -75,11 +75,14 @@ public class MultiplayerServer {
                     throw new RuntimeException(e);
                 }
 
-                if (inputLine.equals("resetGame"))
+                if (inputLine.equals("resetGame")) {
                     connectedPlayers.forEach((e) -> e.out.println("resetGame"));
+                }
 
-                if (inputLine.equals("resetRound"))
+                if (inputLine.equals("resetRound")) {
                     connectedPlayers.forEach((e) -> e.out.println("resetRound"));
+
+                }
 
                 if (playerTurn == 0) {
                     connectedPlayers.get(1).out.println(inputLine);
@@ -88,7 +91,7 @@ public class MultiplayerServer {
                     connectedPlayers.get(0).out.println(inputLine);
                     connectedPlayers.forEach((e) -> e.out.println("playerOne"));
                 }
-                    swapPlayerTurn();
+                swapPlayerTurn();
             }
 
             try {

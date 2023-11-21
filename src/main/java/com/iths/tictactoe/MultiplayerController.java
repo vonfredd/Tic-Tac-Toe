@@ -62,6 +62,8 @@ public class MultiplayerController {
     @FXML
     private final MultiplayerModel model = new MultiplayerModel();
 
+    public static boolean notMyTurn;
+
     private List<Button> buttons;
     private volatile boolean stopListening = false;
 
@@ -120,6 +122,10 @@ public class MultiplayerController {
     }
 
     public void pressedAButton(MouseEvent event) {
+        if (notMyTurn){
+            System.out.println("ok");
+            return;
+        }
         model.gameLogicStarter(buttons.indexOf((Button) event.getSource()));
 
         sendMoveToServer(String.valueOf(buttons.indexOf((Button) event.getSource())));
@@ -175,20 +181,18 @@ public class MultiplayerController {
     }
 
     private void handleReceivedResponse(String response) {
-        if (response.equals("oneConnect")) {
-            playerOneConnected();
-            return;
-        } else if (response.equals("twoConnect")) {
-            playerTwoConnected();
-            return;
-        }
+
+
+        if (playerConnect(response)) return;
 
         if (response.equals("playerOne")) {
             labelTurn.setText(playerTurn == 0 ? "Your turn" : "Not your turn");
+            notMyTurn = playerTurn != 0;
             return;
         }
         if (response.equals("playerTwo")) {
             labelTurn.setText(playerTurn == 1 ? "Your turn" : "Not your turn");
+            notMyTurn = playerTurn != 1;
             return;
         }
 
@@ -201,7 +205,19 @@ public class MultiplayerController {
             model.resetGame();
             return;
         }
+
         model.gameLogicStarter(Integer.parseInt(response));
+    }
+
+    private boolean playerConnect(String response) {
+        if (response.equals("oneConnect")) {
+            playerOneConnected();
+            return true;
+        } else if (response.equals("twoConnect")) {
+            playerTwoConnected();
+            return true;
+        }
+        return false;
     }
 
     public void stopListening() {

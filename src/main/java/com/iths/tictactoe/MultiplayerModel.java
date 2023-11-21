@@ -165,7 +165,6 @@ public class MultiplayerModel {
     }
 
     public void resetRound() {
-        setPlayerTurn(0);
         setGameOver(false);
         setEmptySpaces(getMarkingOfButtons().size());
         setGameState(GameState.RUNNING);
