@@ -193,7 +193,6 @@ public class MultiplayerModel {
 
     public void setGameState() {
         setEmptySpaces(getEmptySpaces() - 1);
-
         if (weHaveAWinner()) {
             setGameState(GameState.WINNER);
         } else if (!weHaveAWinner() && getEmptySpaces() == 0) {

@@ -11,10 +11,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoopedServerMultipleConnectionsTwo {
+public class MultiplayerServer {
     private ServerSocket serverSocket;
-
-    Model model = new Model();
 
     private static int playerCount = 0;
     private static int playerTurn = 0;
