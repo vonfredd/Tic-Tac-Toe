@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoopedServerMultipleConnectionsTwo {
+public class Server {
     private ServerSocket serverSocket;
 
     Model model = new Model();

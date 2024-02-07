@@ -1,6 +1,6 @@
 package com.iths.tictactoe;
 
-import com.iths.tictactoe.server.LoopedServerMultipleConnectionsTwo;
+import com.iths.tictactoe.server.Server;
 import com.iths.tictactoe.server.PlayerClient;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ public class ChoiceController {
 
     private Stage stage;
 
-    private LoopedServerMultipleConnectionsTwo server;
+    private Server server;
     private PlayerClient player;
 
     public void setStage(Stage stage) {
@@ -49,7 +49,7 @@ public class ChoiceController {
     }
 
     public void hostGame() throws IOException {
-        server = new LoopedServerMultipleConnectionsTwo();
+        server = new Server();
 
         Thread serverThread = new Thread(() -> {
             try {

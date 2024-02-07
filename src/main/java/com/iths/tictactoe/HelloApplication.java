@@ -1,7 +1,5 @@
 package com.iths.tictactoe;
 
-import com.iths.tictactoe.server.LoopedServerMultipleConnectionsTwo;
-import com.iths.tictactoe.server.PlayerClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
