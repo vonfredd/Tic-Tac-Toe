@@ -6,3 +6,4 @@ You can play vs a "computer" that will make its choises based on what tiles are 
 Multiplayer can only be played on a local network and
 one has to host before another player can join.
 
+This was made as a school project.
